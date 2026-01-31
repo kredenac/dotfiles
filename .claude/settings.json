@@ -1,0 +1,33 @@
+{
+  "defaultMode": "acceptEdits",
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Read(*.env)",
+      "Read(.env*)",
+      "Write(C:\\Windows\\*)",
+      "Write(C:\\System32\\*)",
+      "Write(C:\\SysWOW64\\*)",
+      "Write(C:\\Program Files\\*)",
+      "Write(C:\\Program Files (x86)\\*)",
+      "Write(C:\\ProgramData\\*)",
+      "Write(C:\\bootmgr*)",
+      "Write(C:\\boot\\*)",
+      "Write(*.sys)",
+      "Write(*.dll)",
+      "Write(*.exe)",
+      "Write(C:\\Users\\All Users\\*)",
+      "Write(C:\\Windows.old\\*)"
+    ]
+  },
+  "webSearch": {
+    "enabled": true,
+    "autoApprove": true
+  }
+}
