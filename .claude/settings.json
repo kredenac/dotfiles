@@ -36,6 +36,10 @@
     "enabled": true,
     "autoApprove": true
   },
+  "webFetch": {
+    "enabled": true,
+    "autoApprove": true
+  },
   "workspaceAccess": {
     "autoApprove": true
   },
