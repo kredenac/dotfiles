@@ -30,7 +30,7 @@ $claudeConfigPath = "$claudeDir\claude.md"
 if (Test-Path $claudeConfigPath) {
     Remove-Item $claudeConfigPath -Force
 }
-New-Item -ItemType SymbolicLink -Path $claudeConfigPath -Target "$PSScriptRoot\claude.md" -Force | Out-Null
+New-Item -ItemType SymbolicLink -Path $claudeConfigPath -Target "$PSScriptRoot\.claude\claude.md" -Force | Out-Null
 Write-Host "✓ Claude Code config linked" -ForegroundColor Green
 
 Write-Host "`nDotfiles setup complete!" -ForegroundColor Cyan
