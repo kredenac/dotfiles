@@ -12,3 +12,8 @@
 ## Technology Preferences
 - TS, JS, Python, Pwsh
 
+## Commands
+- When I say "gac" - you add and commit everything in this git dir
+- When I say "push" - you do gac and then push
+- When I say "open your config" - open the dir "%USERPROFILE%\.claude" in vscode
+- use "gh" (github) commands to create/update repositories on my github as needed
