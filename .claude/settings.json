@@ -5,7 +5,6 @@
     "pr": ""
   },
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "Bash(*)",
       "Read(*)",
@@ -13,7 +12,9 @@
       "Edit(*)",
       "Search(*)",
       "WebSearch",
-      "WebFetch"
+      "WebFetch",
+      "mcp__workiq__ask_work_iq",
+      "mcp__workiq__accept_eula"
     ],
     "deny": [
       "Read(*.env)",
@@ -22,7 +23,7 @@
       "Write(C:\\System32\\*)",
       "Write(C:\\SysWOW64\\*)",
       "Write(C:\\Program Files\\*)",
-      "Write(C:\\Program Files (x86)\\*)",
+      "Write(C:\\Program Files \\(x86\\)\\*)",
       "Write(C:\\ProgramData\\*)",
       "Write(C:\\bootmgr*)",
       "Write(C:\\boot\\*)",
@@ -31,21 +32,139 @@
       "Write(*.exe)",
       "Write(C:\\Users\\All Users\\*)",
       "Write(C:\\Windows.old\\*)"
-    ]
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "model": "opus",
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir // .cwd'); git_info=\"\"; if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -C \"$cwd\" rev-parse --abbrev-ref HEAD 2>/dev/null); if [ -n \"$(git -C \"$cwd\" --no-optional-locks status --porcelain 2>/dev/null)\" ]; then git_info=\" [$branch +]\"; else git_info=\" [$branch]\"; fi; fi; printf \"%s%s\" \"$(basename \"$cwd\")\" \"$git_info\""
+  },
+  "enabledPlugins": {
+    "context7@claude-plugins-official": true,
+    "superpowers@superpowers-marketplace": true
+  },
+  "forceLoginMethod": "console",
+  "webFetch": {
+    "autoApprove": true,
+    "enabled": true
   },
   "webSearch": {
-    "enabled": true,
-    "autoApprove": true
-  },
-  "webFetch": {
-    "enabled": true,
-    "autoApprove": true
+    "autoApprove": true,
+    "enabled": true
   },
   "workspaceAccess": {
     "autoApprove": true
   },
-  "statusLine": {
-    "type": "command",
-    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir // .cwd'); git_info=\"\"; if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -C \"$cwd\" rev-parse --abbrev-ref HEAD 2>/dev/null); if [ -n \"$(git -C \"$cwd\" --no-optional-locks status --porcelain 2>/dev/null)\" ]; then git_info=\" [$branch +]\"; else git_info=\" [$branch]\"; fi; fi; printf \"%s%s\" \"$(basename \"$cwd\")\" \"$git_info\""
+  "skipDangerousModePermissionPrompt": true,
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\scripts\\hook-handle-use.ps1\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
   }
 }

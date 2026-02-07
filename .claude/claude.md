@@ -17,3 +17,9 @@
 - When I say "push" - you do gac and then push
 - When I say "open your config" - open the dir "%USERPROFILE%\.claude" in vscode
 - use "gh" (github) commands to create/update repositories on my github as needed
+
+## Windows Bash Paths
+- The Bash tool runs Git Bash. Windows paths like `C:\foo\bar` get mangled (backslashes treated as escapes).
+- In Bash, always use Unix-style paths: `/c/repos/...` instead of `C:\repos\...`
+- Use Unix commands (`mv`, `cp`, `mkdir -p`) not Windows ones (`move`, `copy`, `md`)
+- Other tools (Read, Write, Edit, Glob) handle Windows paths fine — this only applies to Bash.
