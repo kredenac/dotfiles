@@ -12,7 +12,8 @@
       "Write(*)",
       "Edit(*)",
       "Search(*)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch"
     ],
     "deny": [
       "Read(*.env)",
