@@ -53,4 +53,22 @@ if (Test-Path $peonPingDir) {
     Write-Host "⚠ Peon-ping not installed, skipping config link" -ForegroundColor Yellow
 }
 
+# Claude Code scripts
+$scriptsDir = "$env:USERPROFILE\.claude\scripts"
+if (-not (Test-Path $scriptsDir)) {
+    New-Item -ItemType Directory -Path $scriptsDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$scriptsDir\screenshot.ps1" -Target "$PSScriptRoot\scripts\screenshot.ps1"
+
+# Claude Code skills
+$skillsDir = "$env:USERPROFILE\.claude\skills"
+if (-not (Test-Path $skillsDir)) {
+    New-Item -ItemType Directory -Path $skillsDir -Force | Out-Null
+}
+$skillScreenshotDir = "$skillsDir\screenshot"
+if (-not (Test-Path $skillScreenshotDir)) {
+    New-Item -ItemType Directory -Path $skillScreenshotDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$skillScreenshotDir\SKILL.md" -Target "$PSScriptRoot\skills\screenshot\SKILL.md"
+
 Write-Host "`nDotfiles setup complete!" -ForegroundColor Cyan
