@@ -23,3 +23,8 @@
 - In Bash, always use Unix-style paths: `/c/repos/...` instead of `C:\repos\...`
 - Use Unix commands (`mv`, `cp`, `mkdir -p`) not Windows ones (`move`, `copy`, `md`)
 - Other tools (Read, Write, Edit, Glob) handle Windows paths fine — this only applies to Bash.
+
+## Azure DevOps (ADO)
+- Org: `office` (`https://office.visualstudio.com`), Project: `OC`
+- Use `[Microsoft.VSTS.Common.ClosedBy]` for closed/resolved items, not `[System.AssignedTo]`
+- Example: `az boards query --wiql "SELECT [System.Id], [System.Title], [System.State], [System.WorkItemType], [Microsoft.VSTS.Common.ClosedDate] FROM WorkItems WHERE [Microsoft.VSTS.Common.ClosedBy] = '<Name>' AND ([System.State] = 'Closed' OR [System.State] = 'Resolved') ORDER BY [Microsoft.VSTS.Common.ClosedDate] DESC" --output table`

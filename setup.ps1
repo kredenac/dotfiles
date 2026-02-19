@@ -1,22 +1,39 @@
 # Windows Dotfiles Setup Script
-# Copies configuration files to their proper locations
+# Symlinks configuration files to their proper locations.
+# Idempotent: skips items that are already correctly symlinked.
+# Each item checks if the target path is already a symlink pointing to the
+# correct dotfiles source. If so, it's left alone. Only creates/replaces
+# when missing or pointing elsewhere.
+
+# Helper: creates a symlink only if not already correctly linked
+function Set-DotfileLink {
+    param(
+        [string]$Path,
+        [string]$Target
+    )
+    $item = Get-Item $Path -ErrorAction SilentlyContinue
+    if ($item -and $item.LinkTarget -eq $Target) {
+        Write-Host "· $(Split-Path -Leaf $Path) already linked" -ForegroundColor DarkGray
+        return
+    }
+    if (Test-Path $Path) { Remove-Item $Path -Force }
+    New-Item -ItemType SymbolicLink -Path $Path -Target $Target -Force | Out-Null
+    Write-Host "✓ $(Split-Path -Leaf $Path) linked" -ForegroundColor Green
+}
 
 Write-Host "Setting up dotfiles..." -ForegroundColor Cyan
 
 # PowerShell Profile
-$profilePath = $PROFILE
-$profileDir = Split-Path -Parent $profilePath
+$profileDir = Split-Path -Parent $PROFILE
 if (-not (Test-Path $profileDir)) {
     New-Item -ItemType Directory -Path $profileDir -Force | Out-Null
 }
-Copy-Item -Path ".\PowerShell-Profile.ps1" -Destination $profilePath -Force
-Write-Host "✓ PowerShell profile installed" -ForegroundColor Green
+Set-DotfileLink -Path $PROFILE -Target "$PSScriptRoot\PowerShell-Profile.ps1"
 
 # Windows Terminal Settings
 $wtSettingsPath = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 if (Test-Path (Split-Path -Parent $wtSettingsPath)) {
-    Copy-Item -Path ".\WindowsTerminal-settings.json" -Destination $wtSettingsPath -Force
-    Write-Host "✓ Windows Terminal settings installed" -ForegroundColor Green
+    Set-DotfileLink -Path $wtSettingsPath -Target "$PSScriptRoot\WindowsTerminal-settings.json"
 } else {
     Write-Host "⚠ Windows Terminal not found, skipping" -ForegroundColor Yellow
 }
@@ -26,11 +43,14 @@ $claudeDir = "$env:USERPROFILE\.claude"
 if (-not (Test-Path $claudeDir)) {
     New-Item -ItemType Directory -Path $claudeDir -Force | Out-Null
 }
-$claudeConfigPath = "$claudeDir\claude.md"
-if (Test-Path $claudeConfigPath) {
-    Remove-Item $claudeConfigPath -Force
+Set-DotfileLink -Path "$claudeDir\claude.md" -Target "$PSScriptRoot\.claude\claude.md"
+
+# Peon-ping config (requires peon-ping to be installed first)
+$peonPingDir = "$env:USERPROFILE\.claude\hooks\peon-ping"
+if (Test-Path $peonPingDir) {
+    Set-DotfileLink -Path "$peonPingDir\config.json" -Target "$PSScriptRoot\peon-ping\config.json"
+} else {
+    Write-Host "⚠ Peon-ping not installed, skipping config link" -ForegroundColor Yellow
 }
-New-Item -ItemType SymbolicLink -Path $claudeConfigPath -Target "$PSScriptRoot\.claude\claude.md" -Force | Out-Null
-Write-Host "✓ Claude Code config linked" -ForegroundColor Green
 
 Write-Host "`nDotfiles setup complete!" -ForegroundColor Cyan
