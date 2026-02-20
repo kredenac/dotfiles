@@ -45,12 +45,16 @@ if (-not (Test-Path $claudeDir)) {
 }
 Set-DotfileLink -Path "$claudeDir\claude.md" -Target "$PSScriptRoot\.claude\claude.md"
 
-# Peon-ping config (requires peon-ping to be installed first)
+# Peon-ping: install if missing, then link config
 $peonPingDir = "$env:USERPROFILE\.claude\hooks\peon-ping"
+if (-not (Test-Path $peonPingDir)) {
+    Write-Host "Installing peon-ping..." -ForegroundColor Yellow
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/PeonPing/peon-ping/main/install.ps1" -UseBasicParsing | Invoke-Expression
+}
 if (Test-Path $peonPingDir) {
     Set-DotfileLink -Path "$peonPingDir\config.json" -Target "$PSScriptRoot\peon-ping\config.json"
 } else {
-    Write-Host "⚠ Peon-ping not installed, skipping config link" -ForegroundColor Yellow
+    Write-Host "⚠ Peon-ping installation failed, skipping config link" -ForegroundColor Yellow
 }
 
 # Claude Code scripts
