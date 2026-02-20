@@ -42,10 +42,11 @@
     "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir // .cwd'); git_info=\"\"; if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -C \"$cwd\" rev-parse --abbrev-ref HEAD 2>/dev/null); if [ -n \"$(git -C \"$cwd\" --no-optional-locks status --porcelain 2>/dev/null)\" ]; then git_info=\" [$branch +]\"; else git_info=\" [$branch]\"; fi; fi; printf \"%s%s\" \"$(basename \"$cwd\")\" \"$git_info\""
   },
   "enabledPlugins": {
-    "context7@claude-plugins-official": true,
-    "superpowers@superpowers-marketplace": true
+    "context7@claude-plugins-official": false,
+    "superpowers@superpowers-marketplace": false
   },
   "forceLoginMethod": "console",
+  "skipDangerousModePermissionPrompt": true,
   "webFetch": {
     "autoApprove": true,
     "enabled": true
@@ -57,7 +58,6 @@
   "workspaceAccess": {
     "autoApprove": true
   },
-  "skipDangerousModePermissionPrompt": true,
   "hooks": {
     "SessionStart": [
       {

@@ -3,7 +3,7 @@
     "desktop_notifications": true,
     "annoyed_window_seconds": 10,
     "annoyed_threshold": 3,
-    "active_pack": "dota2_axe",
+    "active_pack": "peasant",
     "enabled": true,
     "categories": {
         "task.error": false,
