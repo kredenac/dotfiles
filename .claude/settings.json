@@ -15,7 +15,9 @@
       "WebSearch",
       "WebFetch",
       "mcp__workiq__ask_work_iq",
-      "mcp__workiq__accept_eula"
+      "mcp__workiq__accept_eula",
+      "mcp__ide__getDiagnostics",
+      "mcp__ide__executeCode"
     ],
     "deny": [
       "Read(*.env)",

@@ -75,4 +75,8 @@ if (-not (Test-Path $skillScreenshotDir)) {
 }
 Set-DotfileLink -Path "$skillScreenshotDir\SKILL.md" -Target "$PSScriptRoot\skills\screenshot\SKILL.md"
 
+# Git defaults
+git config --global init.defaultBranch main
+Write-Host "✓ git default branch set to main" -ForegroundColor Green
+
 Write-Host "`nDotfiles setup complete!" -ForegroundColor Cyan
