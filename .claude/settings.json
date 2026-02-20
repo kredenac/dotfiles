@@ -5,7 +5,6 @@
     "pr": ""
   },
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "Bash(*)",
       "Read(*)",
@@ -31,21 +30,24 @@
       "Write(*.exe)",
       "Write(C:\\Users\\All Users\\*)",
       "Write(C:\\Windows.old\\*)"
-    ]
+    ],
+    "defaultMode": "acceptEdits"
   },
-  "webSearch": {
-    "enabled": true,
-    "autoApprove": true
-  },
-  "webFetch": {
-    "enabled": true,
-    "autoApprove": true
-  },
-  "workspaceAccess": {
-    "autoApprove": true
-  },
+  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir // .cwd'); git_info=\"\"; if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -C \"$cwd\" rev-parse --abbrev-ref HEAD 2>/dev/null); if [ -n \"$(git -C \"$cwd\" --no-optional-locks status --porcelain 2>/dev/null)\" ]; then git_info=\" [$branch +]\"; else git_info=\" [$branch]\"; fi; fi; printf \"%s%s\" \"$(basename \"$cwd\")\" \"$git_info\""
+  },
+  "forceLoginMethod": "console",
+  "webFetch": {
+    "autoApprove": true,
+    "enabled": true
+  },
+  "webSearch": {
+    "autoApprove": true,
+    "enabled": true
+  },
+  "workspaceAccess": {
+    "autoApprove": true
   }
 }
