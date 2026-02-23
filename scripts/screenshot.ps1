@@ -1,7 +1,7 @@
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
-$dir = Join-Path $HOME ".claude" "screenshots"
+$dir = Join-Path (Join-Path $HOME ".claude") "screenshots"
 if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
 
 $dest = Join-Path $dir "latest.png"
