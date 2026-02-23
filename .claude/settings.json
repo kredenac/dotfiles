@@ -4,6 +4,7 @@
     "commit": "",
     "pr": ""
   },
+  
   "permissions": {
     "allow": [
       "Bash",
@@ -17,7 +18,8 @@
       "mcp__workiq__ask_work_iq",
       "mcp__workiq__accept_eula",
       "mcp__ide__getDiagnostics",
-      "mcp__ide__executeCode"
+      "mcp__ide__executeCode",
+      "Skill"
     ],
     "deny": [
       "Read(*.env)",
