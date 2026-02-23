@@ -74,6 +74,11 @@ if (-not (Test-Path $skillScreenshotDir)) {
     New-Item -ItemType Directory -Path $skillScreenshotDir -Force | Out-Null
 }
 Set-DotfileLink -Path "$skillScreenshotDir\SKILL.md" -Target "$PSScriptRoot\skills\screenshot\SKILL.md"
+$skillMakeSkillDir = "$skillsDir\make-skill"
+if (-not (Test-Path $skillMakeSkillDir)) {
+    New-Item -ItemType Directory -Path $skillMakeSkillDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$skillMakeSkillDir\SKILL.md" -Target "$PSScriptRoot\skills\make-skill\SKILL.md"
 
 $skillAdoPrDir = "$skillsDir\ado-pr-comments"
 if (-not (Test-Path $skillAdoPrDir)) {

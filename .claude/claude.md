@@ -10,7 +10,7 @@
 - Question me if you think I'm wrong
 
 ## Technology Preferences
-- TS, JS, Python, Pwsh
+- TS, JS, Python, Pwsh. I'm almost on Windows.
 
 ## Commands
 - When I say "gac" - you add and commit everything in this git dir
