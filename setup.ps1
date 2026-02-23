@@ -86,6 +86,12 @@ if (-not (Test-Path $skillAdoPrDir)) {
 }
 Set-DotfileLink -Path "$skillAdoPrDir\SKILL.md" -Target "$PSScriptRoot\skills\ado-pr-comments\SKILL.md"
 
+$skillInitRepoDir = "$skillsDir\init-repo"
+if (-not (Test-Path $skillInitRepoDir)) {
+    New-Item -ItemType Directory -Path $skillInitRepoDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$skillInitRepoDir\SKILL.md" -Target "$PSScriptRoot\skills\init-repo\SKILL.md"
+
 # Git defaults
 git config --global init.defaultBranch main
 Write-Host "✓ git default branch set to main" -ForegroundColor Green

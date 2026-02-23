@@ -11,6 +11,7 @@
 
 ## Technology Preferences
 - TS, JS, Python, Pwsh. I'm almost on Windows.
+- Repos are usually at `C:\repos` 
 
 ## Commands
 - When I say "gac" - you add and commit everything in this git dir
@@ -19,10 +20,7 @@
 - use "gh" (github) commands to create/update repositories on my github as needed
 
 ## Windows Bash Paths
-- The Bash tool runs Git Bash. Windows paths like `C:\foo\bar` get mangled (backslashes treated as escapes).
-- In Bash, always use Unix-style paths: `/c/repos/...` instead of `C:\repos\...`
-- Use Unix commands (`mv`, `cp`, `mkdir -p`) not Windows ones (`move`, `copy`, `md`)
-- Other tools (Read, Write, Edit, Glob) handle Windows paths fine — this only applies to Bash.
+- The Bash tool runs Git Bash. Windows paths like `C:\foo\bar` get mangled (backslashes treated as escapes). Other tools handle Windows paths fine.
 
 ## Azure DevOps (ADO)
 - Org: `office` (`https://office.visualstudio.com`), Project: `OC`
