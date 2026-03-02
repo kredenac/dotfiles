@@ -74,12 +74,23 @@ if (-not (Test-Path $skillScreenshotDir)) {
     New-Item -ItemType Directory -Path $skillScreenshotDir -Force | Out-Null
 }
 Set-DotfileLink -Path "$skillScreenshotDir\SKILL.md" -Target "$PSScriptRoot\skills\screenshot\SKILL.md"
+$skillMakeSkillDir = "$skillsDir\make-skill"
+if (-not (Test-Path $skillMakeSkillDir)) {
+    New-Item -ItemType Directory -Path $skillMakeSkillDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$skillMakeSkillDir\SKILL.md" -Target "$PSScriptRoot\skills\make-skill\SKILL.md"
 
 $skillAdoPrDir = "$skillsDir\ado-pr-comments"
 if (-not (Test-Path $skillAdoPrDir)) {
     New-Item -ItemType Directory -Path $skillAdoPrDir -Force | Out-Null
 }
 Set-DotfileLink -Path "$skillAdoPrDir\SKILL.md" -Target "$PSScriptRoot\skills\ado-pr-comments\SKILL.md"
+
+$skillInitRepoDir = "$skillsDir\init-repo"
+if (-not (Test-Path $skillInitRepoDir)) {
+    New-Item -ItemType Directory -Path $skillInitRepoDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$skillInitRepoDir\SKILL.md" -Target "$PSScriptRoot\skills\init-repo\SKILL.md"
 
 # Git defaults
 git config --global init.defaultBranch main
