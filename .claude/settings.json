@@ -4,7 +4,6 @@
     "commit": "",
     "pr": ""
   },
-  
   "permissions": {
     "allow": [
       "Bash",
@@ -19,9 +18,31 @@
       "mcp__workiq__accept_eula",
       "mcp__ide__getDiagnostics",
       "mcp__ide__executeCode",
+      "Skill",
       "mcp__context7__resolve-library-id",
       "mcp__context7__get-library-docs",
-      "Skill"
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_select_option",
+      "mcp__playwright__browser_hover",
+      "mcp__playwright__browser_drag",
+      "mcp__playwright__browser_press_key",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_close",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_tabs",
+      "mcp__playwright__browser_navigate_back",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_network_requests",
+      "mcp__playwright__browser_handle_dialog",
+      "mcp__playwright__browser_file_upload",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_install",
+      "mcp__playwright__browser_run_code"
     ],
     "deny": [
       "Read(*.env)",
@@ -30,7 +51,6 @@
       "Write(C:\\System32\\*)",
       "Write(C:\\SysWOW64\\*)",
       "Write(C:\\Program Files\\*)",
-      "Write(C:\\Program Files \\(x86\\)\\*)",
       "Write(C:\\ProgramData\\*)",
       "Write(C:\\bootmgr*)",
       "Write(C:\\boot\\*)",
@@ -43,39 +63,8 @@
     ]
   },
   "model": "opus",
-  "statusLine": {
-    "type": "command",
-    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir // .cwd'); git_info=\"\"; if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -C \"$cwd\" rev-parse --abbrev-ref HEAD 2>/dev/null); if [ -n \"$(git -C \"$cwd\" --no-optional-locks status --porcelain 2>/dev/null)\" ]; then git_info=\" [$branch +]\"; else git_info=\" [$branch]\"; fi; fi; printf \"%s%s\" \"$(basename \"$cwd\")\" \"$git_info\""
-  },
-  "enabledPlugins": {
-    "context7@claude-plugins-official": false,
-    "superpowers@superpowers-marketplace": false
-  },
-  "forceLoginMethod": "console",
-  "skipDangerousModePermissionPrompt": true,
-  "webFetch": {
-    "autoApprove": true,
-    "enabled": true
-  },
-  "webSearch": {
-    "autoApprove": true,
-    "enabled": true
-  },
-  "workspaceAccess": {
-    "autoApprove": true
-  },
   "hooks": {
     "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
-            "timeout": 10
-          }
-        ]
-      },
       {
         "matcher": "",
         "hooks": [
@@ -93,16 +82,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
             "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ~/.claude/hooks/peon-ping/peon.ps1",
             "timeout": 10
           }
@@ -110,16 +89,6 @@
       }
     ],
     "SubagentStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
-            "timeout": 10
-          }
-        ]
-      },
       {
         "matcher": "",
         "hooks": [
@@ -137,16 +106,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
             "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ~/.claude/hooks/peon-ping/peon.ps1",
             "timeout": 10
           }
@@ -154,16 +113,6 @@
       }
     ],
     "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
-            "timeout": 10
-          }
-        ]
-      },
       {
         "matcher": "",
         "hooks": [
@@ -181,16 +130,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
             "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ~/.claude/hooks/peon-ping/peon.ps1",
             "timeout": 10
           }
@@ -198,16 +137,6 @@
       }
     ],
     "PostToolUseFailure": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
-            "timeout": 10
-          }
-        ]
-      },
       {
         "matcher": "",
         "hooks": [
@@ -225,16 +154,6 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\peon.ps1\"",
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
             "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ~/.claude/hooks/peon-ping/peon.ps1",
             "timeout": 10
           }
@@ -247,11 +166,32 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\nidimitr\\.claude\\hooks\\peon-ping\\scripts\\hook-handle-use.ps1\"",
+            "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ~/.claude/hooks/peon-ping/scripts/hook-handle-use.ps1",
             "timeout": 5
           }
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "input=$(cat); cwd=$(echo \"$input\" | jq -r '.workspace.current_dir // .cwd'); git_info=\"\"; if git -C \"$cwd\" rev-parse --git-dir > /dev/null 2>&1; then branch=$(git -C \"$cwd\" rev-parse --abbrev-ref HEAD 2>/dev/null); if [ -n \"$(git -C \"$cwd\" --no-optional-locks status --porcelain 2>/dev/null)\" ]; then git_info=\" [$branch +]\"; else git_info=\" [$branch]\"; fi; fi; printf \"%s%s\" \"$(basename \"$cwd\")\" \"$git_info\""
+  },
+  "enabledPlugins": {
+    "context7@claude-plugins-official": false,
+    "playwright@claude-plugins-official": false
+  },
+  "forceLoginMethod": "console",
+  "skipDangerousModePermissionPrompt": true,
+  "webFetch": {
+    "autoApprove": true,
+    "enabled": true
+  },
+  "webSearch": {
+    "autoApprove": true,
+    "enabled": true
+  },
+  "workspaceAccess": {
+    "autoApprove": true
   }
 }
