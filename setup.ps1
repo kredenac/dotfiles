@@ -49,7 +49,7 @@ Set-DotfileLink -Path "$claudeDir\claude.md" -Target "$PSScriptRoot\.claude\clau
 $peonPingDir = "$env:USERPROFILE\.claude\hooks\peon-ping"
 if (-not (Test-Path $peonPingDir)) {
     Write-Host "Installing peon-ping..." -ForegroundColor Yellow
-    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/PeonPing/peon-ping/main/install.ps1" -UseBasicParsing | Invoke-Expression
+    & ([scriptblock]::Create((Invoke-WebRequest -Uri "https://raw.githubusercontent.com/PeonPing/peon-ping/main/install.ps1" -UseBasicParsing).Content)) -Packs peasant
 }
 if (Test-Path $peonPingDir) {
     Set-DotfileLink -Path "$peonPingDir\config.json" -Target "$PSScriptRoot\peon-ping\config.json"
