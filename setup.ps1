@@ -99,6 +99,12 @@ if (-not (Test-Path $skillClaudeCostDir)) {
 }
 Set-DotfileLink -Path "$skillClaudeCostDir\SKILL.md" -Target "$PSScriptRoot\skills\claude-cost\SKILL.md"
 
+$skillDotfilesDir = "$skillsDir\dotfiles"
+if (-not (Test-Path $skillDotfilesDir)) {
+    New-Item -ItemType Directory -Path $skillDotfilesDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$skillDotfilesDir\SKILL.md" -Target "$PSScriptRoot\skills\dotfiles\SKILL.md"
+
 # Git defaults
 git config --global init.defaultBranch main
 Write-Host "✓ git default branch set to main" -ForegroundColor Green
