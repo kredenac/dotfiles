@@ -63,6 +63,7 @@ if (-not (Test-Path $scriptsDir)) {
     New-Item -ItemType Directory -Path $scriptsDir -Force | Out-Null
 }
 Set-DotfileLink -Path "$scriptsDir\screenshot.ps1" -Target "$PSScriptRoot\scripts\screenshot.ps1"
+Set-DotfileLink -Path "$scriptsDir\claude-cost.mjs" -Target "$PSScriptRoot\scripts\claude-cost.mjs"
 
 # Claude Code skills
 $skillsDir = "$env:USERPROFILE\.claude\skills"
@@ -91,6 +92,12 @@ if (-not (Test-Path $skillInitRepoDir)) {
     New-Item -ItemType Directory -Path $skillInitRepoDir -Force | Out-Null
 }
 Set-DotfileLink -Path "$skillInitRepoDir\SKILL.md" -Target "$PSScriptRoot\skills\init-repo\SKILL.md"
+
+$skillClaudeCostDir = "$skillsDir\claude-cost"
+if (-not (Test-Path $skillClaudeCostDir)) {
+    New-Item -ItemType Directory -Path $skillClaudeCostDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$skillClaudeCostDir\SKILL.md" -Target "$PSScriptRoot\skills\claude-cost\SKILL.md"
 
 # Git defaults
 git config --global init.defaultBranch main
