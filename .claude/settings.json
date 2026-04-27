@@ -1,5 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "attribution": {
     "commit": "",
     "pr": ""
@@ -61,9 +64,6 @@
       "Write(C:\\Windows.old\\*)",
       "Write(C:\\Program Files (x86)\\*)"
     ]
-  },
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "model": "opus[1m]",
   "hooks": {
@@ -182,9 +182,19 @@
   },
   "enabledPlugins": {
     "context7@claude-plugins-official": false,
-    "playwright@claude-plugins-official": false
+    "playwright@claude-plugins-official": false,
+    "document-skills@anthropic-agent-skills": true
+  },
+  "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    }
   },
   "forceLoginMethod": "console",
+  "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
   "webFetch": {
     "autoApprove": true,
@@ -196,6 +206,5 @@
   },
   "workspaceAccess": {
     "autoApprove": true
-  },
-  "effortLevel": "high"
+  }
 }
