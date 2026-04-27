@@ -44,6 +44,7 @@ if (-not (Test-Path $claudeDir)) {
     New-Item -ItemType Directory -Path $claudeDir -Force | Out-Null
 }
 Set-DotfileLink -Path "$claudeDir\claude.md" -Target "$PSScriptRoot\.claude\claude.md"
+Set-DotfileLink -Path "$claudeDir\settings.json" -Target "$PSScriptRoot\.claude\settings.json"
 
 # Peon-ping: install if missing, then link config
 $peonPingDir = "$env:USERPROFILE\.claude\hooks\peon-ping"
