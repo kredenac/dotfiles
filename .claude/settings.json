@@ -46,7 +46,14 @@
       "mcp__playwright__browser_file_upload",
       "mcp__playwright__browser_evaluate",
       "mcp__playwright__browser_install",
-      "mcp__playwright__browser_run_code"
+      "mcp__playwright__browser_run_code",
+      "mcp__fluent-agent__ask_fluent_agent",
+      "mcp__fluent-agent__search_fluent_components",
+      "mcp__fluent-agent__search_fluent_icons",
+      "mcp__fluent-agent__search_fluent_tokens",
+      "mcp__fluent-agent__validate_fluent_component",
+      "mcp__fluent-agent__validate_fluent_icon",
+      "mcp__fluent-agent__validate_fluent_token"
     ],
     "deny": [
       "Read(*.env)",
@@ -77,6 +84,15 @@
             "type": "command",
             "command": "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File ~/.claude/hooks/peon-ping/peon.ps1",
             "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "any-buddy apply --silent"
           }
         ]
       }
@@ -197,6 +213,7 @@
   },
   "forceLoginMethod": "console",
   "effortLevel": "high",
+  "autoMemoryEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "webFetch": {
     "autoApprove": true,
