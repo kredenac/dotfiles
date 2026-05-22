@@ -46,6 +46,15 @@ if (-not (Test-Path $claudeDir)) {
 Set-DotfileLink -Path "$claudeDir\claude.md" -Target "$PSScriptRoot\.claude\claude.md"
 Set-DotfileLink -Path "$claudeDir\settings.json" -Target "$PSScriptRoot\.claude\settings.json"
 
+# GitHub Copilot CLI global config
+$copilotDir = "$env:USERPROFILE\.copilot"
+if (-not (Test-Path $copilotDir)) {
+    New-Item -ItemType Directory -Path $copilotDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$copilotDir\settings.json" -Target "$PSScriptRoot\.copilot\settings.json"
+Set-DotfileLink -Path "$copilotDir\mcp-config.json" -Target "$PSScriptRoot\.copilot\mcp-config.json"
+Set-DotfileLink -Path "$copilotDir\permissions-config.json" -Target "$PSScriptRoot\.copilot\permissions-config.json"
+
 # Peon-ping: install if missing, then link config
 $peonPingDir = "$env:USERPROFILE\.claude\hooks\peon-ping"
 if (-not (Test-Path $peonPingDir)) {
@@ -64,7 +73,6 @@ if (-not (Test-Path $scriptsDir)) {
     New-Item -ItemType Directory -Path $scriptsDir -Force | Out-Null
 }
 Set-DotfileLink -Path "$scriptsDir\screenshot.ps1" -Target "$PSScriptRoot\scripts\screenshot.ps1"
-Set-DotfileLink -Path "$scriptsDir\claude-cost.mjs" -Target "$PSScriptRoot\scripts\claude-cost.mjs"
 
 # Claude Code skills
 $skillsDir = "$env:USERPROFILE\.claude\skills"
@@ -82,23 +90,11 @@ if (-not (Test-Path $skillMakeSkillDir)) {
 }
 Set-DotfileLink -Path "$skillMakeSkillDir\SKILL.md" -Target "$PSScriptRoot\skills\make-skill\SKILL.md"
 
-$skillAdoPrDir = "$skillsDir\ado-pr-comments"
-if (-not (Test-Path $skillAdoPrDir)) {
-    New-Item -ItemType Directory -Path $skillAdoPrDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$skillAdoPrDir\SKILL.md" -Target "$PSScriptRoot\skills\ado-pr-comments\SKILL.md"
-
 $skillInitRepoDir = "$skillsDir\init-repo"
 if (-not (Test-Path $skillInitRepoDir)) {
     New-Item -ItemType Directory -Path $skillInitRepoDir -Force | Out-Null
 }
 Set-DotfileLink -Path "$skillInitRepoDir\SKILL.md" -Target "$PSScriptRoot\skills\init-repo\SKILL.md"
-
-$skillClaudeCostDir = "$skillsDir\claude-cost"
-if (-not (Test-Path $skillClaudeCostDir)) {
-    New-Item -ItemType Directory -Path $skillClaudeCostDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$skillClaudeCostDir\SKILL.md" -Target "$PSScriptRoot\skills\claude-cost\SKILL.md"
 
 $skillDotfilesDir = "$skillsDir\dotfiles"
 if (-not (Test-Path $skillDotfilesDir)) {
@@ -133,6 +129,13 @@ if ($ahkPath) {
         Write-Host "· CleanPaste.ahk already running" -ForegroundColor DarkGray
     }
 }
+
+# Agency global config
+$agencyDir = "$env:USERPROFILE\.agency"
+if (-not (Test-Path $agencyDir)) {
+    New-Item -ItemType Directory -Path $agencyDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$agencyDir\agency.toml" -Target "$PSScriptRoot\agency.toml"
 
 # Git defaults
 git config --global init.defaultBranch main

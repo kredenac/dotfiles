@@ -1,3 +1,6 @@
+# GitHub Copilot CLI: yolo mode (allow all permissions without prompts)
+$env:COPILOT_ALLOW_ALL = "true"
+
 # Import posh-git for Git prompt integration
 Import-Module posh-git
 

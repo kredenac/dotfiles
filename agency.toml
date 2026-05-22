@@ -1,0 +1,7 @@
+# Agency Config Docs: https://eng.ms/docs/coreai/devdiv/one-engineering-system-1es/1es-jacekcz/startrightgitops/agency/cli/agency-config
+
+[mcps.builtins]
+kusto_aria   = { type = "kusto", service_uri = "https://kusto.aria.microsoft.com/" }
+kusto_augloop = { type = "kusto", service_uri = "https://odxaugloop.eastus.kusto.windows.net/" }
+kusto_1es  = { type = "kusto", service_uri = "https://1es.kusto.windows.net/" }
+enghub       = { type = "enghub" }

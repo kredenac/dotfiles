@@ -1,0 +1,23 @@
+{
+  "logLevel": "all",
+  "experimental": true,
+  "askUser": false,
+  "extraKnownMarketplaces": {
+    "agency": {
+      "source": {
+        "source": "github",
+        "repo": "agency-microsoft/.github-private"
+      }
+    }
+  },
+  "trustedFolders": [
+    "C:\\repos"
+  ],
+  "disabledSkills": [
+    "fix-week-bugs"
+  ],
+  "showReasoning": false,
+  "skillDirectories": [
+    "C:\\repos\\dotfiles\\skills"
+  ]
+}
