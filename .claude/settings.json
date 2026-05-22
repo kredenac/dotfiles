@@ -1,5 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "attribution": {
     "commit": "",
     "pr": ""
@@ -63,9 +66,6 @@
       "Write(C:\\Program Files (x86)\\*)"
     ],
     "defaultMode": "acceptEdits"
-  },
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "model": "opus[1m]",
   "hooks": {
@@ -184,10 +184,13 @@
   },
   "enabledPlugins": {
     "context7@claude-plugins-official": false,
-    "playwright@claude-plugins-official": false
+    "playwright@claude-plugins-official": false,
+    "chrome-devtools-mcp@claude-plugins-official": true
   },
   "forceLoginMethod": "console",
+  "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true,
   "webFetch": {
     "autoApprove": true,
     "enabled": true
@@ -198,6 +201,5 @@
   },
   "workspaceAccess": {
     "autoApprove": true
-  },
-  "effortLevel": "high"
+  }
 }
