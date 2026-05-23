@@ -131,11 +131,18 @@ if ($ahkPath) {
 }
 
 # Agency global config
-$agencyDir = "$env:USERPROFILE\.agency"
+$agencyDir = "$env:LOCALAPPDATA\agency"
 if (-not (Test-Path $agencyDir)) {
     New-Item -ItemType Directory -Path $agencyDir -Force | Out-Null
 }
 Set-DotfileLink -Path "$agencyDir\agency.toml" -Target "$PSScriptRoot\agency.toml"
+
+# Clean up legacy location if it's a symlink we previously created
+$legacyLink = "$env:USERPROFILE\.agency\agency.toml"
+if ((Test-Path $legacyLink) -and (Get-Item $legacyLink).LinkType -eq 'SymbolicLink') {
+    Remove-Item $legacyLink -Force
+    Write-Host "✓ Removed legacy symlink at $legacyLink" -ForegroundColor Yellow
+}
 
 # Git defaults
 git config --global init.defaultBranch main
