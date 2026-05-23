@@ -20,11 +20,18 @@ cd C:\repos\dotfiles
 .\setup.ps1
 ```
 
-## Copilot CLI "yolo" mode
+## Tips
+
+### Copilot CLI "yolo" mode
 
 Yolo mode (all permissions without prompts) is enabled via:
 - `COPILOT_ALLOW_ALL=true` env var (set in profile and at User level)
 - Equivalent to launching with `copilot --yolo` or `copilot --allow-all`
+- No config file setting exists — the env var is the only way to persist it
+
+### Trusted folders cover subdirectories
+
+`trustedFolders` in `~/.copilot/config.json` uses prefix matching — adding `"C:\\"` trusts everything on the C drive. No need to add individual subdirs.
 
 To add MCP servers, edit `.copilot/mcp-config.json`:
 ```json
