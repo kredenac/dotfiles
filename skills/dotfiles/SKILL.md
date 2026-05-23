@@ -11,7 +11,7 @@ Sync the dotfiles repo (pull then push).
 ## Steps
 
 1. `cd C:/repos/dotfiles`
-2. `git pull --rebase`
-3. Check if there are any local commits to push: `git status`
-4. If ahead of remote, `git push`
-5. Report what happened (pulled N commits, pushed N commits, or already up to date).
+2. If there are uncommitted local changes (`git status --porcelain`), stage and commit them: `git add -A && git commit -m "sync: update dotfiles"`
+3. `git pull --rebase`
+4. `git push` (push local commits, including any just committed)
+5. Report what happened (committed N files, pulled N commits, pushed N commits, or already up to date).

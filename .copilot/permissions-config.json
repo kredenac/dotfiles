@@ -6,6 +6,20 @@
           "kind": "write"
         }
       ]
+    },
+    "C:\\Users\\nidimitr\\.agency": {
+      "tool_approvals": [
+        {
+          "kind": "write"
+        }
+      ]
+    },
+    "C:\\Users\\nidimitr\\.copilot": {
+      "tool_approvals": [
+        {
+          "kind": "write"
+        }
+      ]
     }
   }
 }

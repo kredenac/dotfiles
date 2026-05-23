@@ -1,7 +1,36 @@
 # Agency Config Docs: https://eng.ms/docs/coreai/devdiv/one-engineering-system-1es/1es-jacekcz/startrightgitops/agency/cli/agency-config
 
 [mcps.builtins]
-kusto_aria   = { type = "kusto", service_uri = "https://kusto.aria.microsoft.com/" }
-kusto_augloop = { type = "kusto", service_uri = "https://odxaugloop.eastus.kusto.windows.net/" }
-kusto_1es  = { type = "kusto", service_uri = "https://1es.kusto.windows.net/" }
-enghub       = { type = "enghub" }
+# ── Currently enabled ──
+# ado              = { type = "ado", organization = "office" }
+# kusto = { type = "kusto", known_services = '[{"service_uri":"https://kusto.aria.microsoft.com/","description":"Aria telemetry"},{"service_uri":"https://odxaugloop.eastus.kusto.windows.net/","description":"AugLoop"},{"service_uri":"https://1es.kusto.windows.net/","description":"1ES engineering"}]' }
+# enghub        = { type = "enghub" }
+# icm              = true
+# es-chat          = true
+
+# ── All built-in MCPs (disabled by default — set to true to enable) ──
+bluebird         = false
+msft-learn       = false
+watson           = false
+s360-breeze      = false
+service-tree     = false
+change-ledger    = false
+safefly          = false
+cloudbuild       = false
+security-context = false
+graph            = false
+teams            = false
+sharepoint       = false
+onedrive         = false
+mail             = false
+calendar         = false
+planner          = false
+word             = false
+m365-user        = false
+m365-copilot     = false
+engage           = false
+fluent           = false
+workiq           = false
+perf-pas         = false
+domain-lens      = false
+logger           = false

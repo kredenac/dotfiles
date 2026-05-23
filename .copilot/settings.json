@@ -10,14 +10,21 @@
       }
     }
   },
-  "trustedFolders": [
-    "C:\\repos"
-  ],
   "disabledSkills": [
     "fix-week-bugs"
   ],
-  "showReasoning": false,
+  "showReasoning": true,
+  "keepAlive": "busy",
+  "continueOnAutoMode": true,
+  "footer": {
+    "showDirectory": true,
+    "showBranch": true,
+    "showAiUsed": false
+  },
   "skillDirectories": [
     "C:\\repos\\dotfiles\\skills"
+  ],
+  "enabledMcpServers": [
+    "computer-use"
   ]
 }
