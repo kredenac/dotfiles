@@ -1,8 +1,4 @@
-# GitHub Copilot CLI: yolo mode (allow all permissions without prompts)
-$env:COPILOT_ALLOW_ALL = "true"
 
-# Import posh-git for Git prompt integration
-Import-Module posh-git
 
 # Git shortcuts
 function Get-GitCommit { & git add -A; git commit -m $args }
@@ -36,22 +32,27 @@ function GitSquashUnpushed {
 
 New-Alias -Name gsq -Value GitSquashUnpushed
 
-# Agency Copilot in yolo mode
+$env:COPILOT_ALLOW_ALL = "true"
+$env:COPILOT_GITHUB_TABS = "false"
+
 function Invoke-Copilot { agency copilot --yolo @args }
 Set-Alias -Name c -Value Invoke-Copilot
 
+# Import posh-git for Git prompt integration
+# Import-Module posh-git
+
 # Custom prompt with posh-git integration and Windows Terminal support
-function prompt
-{
-    $loc = Get-Location
+# function prompt
+# {
+#     $loc = Get-Location
 
-    $prompt = & $GitPromptScriptBlock
+#     $prompt = & $GitPromptScriptBlock
 
-    $prompt += "$([char]27)]9;12$([char]7)"
-    if ($loc.Provider.Name -eq "FileSystem")
-    {
-        $prompt += "$([char]27)]9;9;`"$($loc.ProviderPath)`"$([char]27)\"
-    }
+#     $prompt += "$([char]27)]9;12$([char]7)"
+#     if ($loc.Provider.Name -eq "FileSystem")
+#     {
+#         $prompt += "$([char]27)]9;9;`"$($loc.ProviderPath)`"$([char]27)\"
+#     }
 
-    $prompt
-}
+#     $prompt
+# }
