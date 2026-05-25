@@ -13,7 +13,7 @@
   "disabledSkills": [
     "fix-week-bugs"
   ],
-  "showReasoning": true,
+  "showReasoning": false,
   "keepAlive": "busy",
   "continueOnAutoMode": true,
   "footer": {
