@@ -36,6 +36,10 @@ function GitSquashUnpushed {
 
 New-Alias -Name gsq -Value GitSquashUnpushed
 
+# Agency Copilot in yolo mode
+function Invoke-Copilot { agency copilot --yolo @args }
+Set-Alias -Name c -Value Invoke-Copilot
+
 # Custom prompt with posh-git integration and Windows Terminal support
 function prompt
 {
