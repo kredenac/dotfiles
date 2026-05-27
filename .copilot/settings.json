@@ -27,7 +27,7 @@
   "enabledMcpServers": [
     "computer-use"
   ],
-  "model": "claude-opus-4.7-1m-internal",
+  "model": "claude-opus-4.7-high",
   "effortLevel": "high",
   "contextTier": "long_context"
 }
