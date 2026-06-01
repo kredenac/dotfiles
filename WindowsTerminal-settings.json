@@ -38,24 +38,24 @@
             "keys": "ctrl+shift+c"
         },
         {
-            "id": "Terminal.CopyToClipboard",
-            "keys": "ctrl+c"
-        },
-        {
             "id": "Terminal.DuplicatePaneRight",
             "keys": "ctrl+shift+d"
+        },
+        {
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+c"
         },
         {
             "id": "Terminal.DuplicatePaneDown",
             "keys": "ctrl+shift+s"
         },
         {
-            "id": "Terminal.PasteFromClipboard",
-            "keys": "ctrl+v"
-        },
-        {
             "id": "Terminal.FindText",
             "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
         }
     ],
     "newTabMenu": 
@@ -92,13 +92,13 @@
                 "name": "Command Prompt"
             },
             {
+                "commandline": "pwsh.exe -NoExit -ExecutionPolicy Bypass -File \"C:\\repos\\dotfiles\\scripts\\Open-CopilotQuad.ps1\"",
                 "guid": "{71ce5b3c-b5b5-4e37-83f2-0fe6f135d13b}",
                 "hidden": false,
-                "name": "Copilot 2x2",
-                "commandline": "pwsh.exe -NoExit -ExecutionPolicy Bypass -File \"C:\\repos\\dotfiles\\scripts\\Open-CopilotQuad.ps1\"",
-                "startingDirectory": "C:\\repos",
                 "icon": "\ud83e\udd16",
+                "name": "Copilot 2x2",
                 "opacity": 90,
+                "startingDirectory": "C:\\repos",
                 "useAcrylic": true
             }
         ]

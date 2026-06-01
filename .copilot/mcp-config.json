@@ -1,3 +1,74 @@
 {
-  "mcpServers": {}
+  "mcpServers": {
+    "ado": {
+      "tools": [
+        "*"
+      ],
+      "type": "local",
+      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "args": [
+        "mcp",
+        "ado",
+        "--organization",
+        "office"
+      ]
+    },
+    "kusto": {
+      "tools": [
+        "*"
+      ],
+      "type": "local",
+      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "args": [
+        "mcp",
+        "kusto",
+        "--known-services",
+        "[{\"service_uri\":\"https://kusto.aria.microsoft.com/\",\"description\":\"Aria telemetry\"},{\"service_uri\":\"https://odxaugloop.eastus.kusto.windows.net/\",\"description\":\"AugLoop\"},{\"service_uri\":\"https://1es.kusto.windows.net/\",\"description\":\"1ES engineering\"}]"
+      ]
+    },
+    "teams": {
+      "tools": [
+        "*"
+      ],
+      "type": "local",
+      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "args": [
+        "mcp",
+        "teams"
+      ]
+    },
+    "outlook": {
+      "tools": [
+        "*"
+      ],
+      "type": "local",
+      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "args": [
+        "mcp",
+        "mail"
+      ]
+    },
+    "calendar": {
+      "tools": [
+        "*"
+      ],
+      "type": "local",
+      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "args": [
+        "mcp",
+        "calendar"
+      ]
+    },
+    "icm": {
+      "type": "local",
+      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "args": [
+        "mcp",
+        "icm"
+      ],
+      "tools": [
+        "*"
+      ]
+    }
+  }
 }
