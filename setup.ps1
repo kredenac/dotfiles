@@ -102,6 +102,12 @@ if (-not (Test-Path $skillDotfilesDir)) {
 }
 Set-DotfileLink -Path "$skillDotfilesDir\SKILL.md" -Target "$PSScriptRoot\skills\dotfiles\SKILL.md"
 
+$skillWordCopilotOncallDir = "$skillsDir\word-copilot-oncall"
+if (-not (Test-Path $skillWordCopilotOncallDir)) {
+    New-Item -ItemType Directory -Path $skillWordCopilotOncallDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$skillWordCopilotOncallDir\SKILL.md" -Target "$PSScriptRoot\skills\word-copilot-oncall\SKILL.md"
+
 # AutoHotkey: install if missing, link script to Startup, and run it
 $ahkExe = Get-Command "AutoHotkey64.exe" -ErrorAction SilentlyContinue
 if (-not $ahkExe) {
