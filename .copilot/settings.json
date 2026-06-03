@@ -29,5 +29,6 @@
   ],
   "model": "claude-opus-4.7-high",
   "effortLevel": "high",
-  "contextTier": "long_context"
+  "contextTier": "long_context",
+  "includeCoAuthoredBy": false
 }

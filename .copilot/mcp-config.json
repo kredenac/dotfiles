@@ -5,7 +5,7 @@
         "*"
       ],
       "type": "local",
-      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "command": "agency",
       "args": [
         "mcp",
         "ado",
@@ -18,7 +18,7 @@
         "*"
       ],
       "type": "local",
-      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "command": "agency",
       "args": [
         "mcp",
         "kusto",
@@ -31,7 +31,7 @@
         "*"
       ],
       "type": "local",
-      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "command": "agency",
       "args": [
         "mcp",
         "teams"
@@ -42,7 +42,7 @@
         "*"
       ],
       "type": "local",
-      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "command": "agency",
       "args": [
         "mcp",
         "mail"
@@ -53,7 +53,7 @@
         "*"
       ],
       "type": "local",
-      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "command": "agency",
       "args": [
         "mcp",
         "calendar"
@@ -61,7 +61,7 @@
     },
     "icm": {
       "type": "local",
-      "command": "C:\\Users\\nidimitr\\AppData\\Roaming\\agency\\CurrentVersion\\agency.exe",
+      "command": "agency",
       "args": [
         "mcp",
         "icm"
