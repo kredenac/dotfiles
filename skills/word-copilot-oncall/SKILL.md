@@ -48,7 +48,45 @@ When invoked, do whatever the user asks. If they're starting a shift or want a t
 
 `icm` (incident triage, **read-only**), `ado` (work items), `kusto` (telemetry — AugLoop / Aria / 1ES clusters), `teams` / `mail` (handoff). Per-server args live behind `agency mcp <name> --help`.
 
+## Finding the owner of a monitor-fired incident
+
+When an incident was raised by a Geneva monitor (typical for Word Copilot — most Sydney/WDA alerts are monitor-driven), the **most knowledgeable people are the PR author + reviewers of the monitor's config file**, not whoever is on rotation. Use this playbook to identify them:
+
+1. **Get the monitor ID from the incident.** Call `icm` MCP `get_incident_details_by_id` with the incident id — the response contains a `monitorId` field (a GUID).
+2. **Locate the monitor's config file.** For Sydney/CompliantSydneyGeneva monitors the repo is `o365exchange/O365 Core/MonitorsCompSyd` (project id `959adb23-f323-4d52-8203-ff34e5cbeefa`, repo id `c6b8ccba-d911-4d86-afa2-4bc6b795045d`). Files live at `GenevaSrc/MonitorsV2/<monitorId>.json`. Find via ADO Code Search:
+   ```powershell
+   $body = '{"searchText":"<monitorId>","$top":10,"filters":{"Project":["O365 Core"],"Repository":["MonitorsCompSyd"]}}'
+   Invoke-RestMethod -Uri "https://almsearch.dev.azure.com/o365exchange/959adb23-f323-4d52-8203-ff34e5cbeefa/_apis/search/codesearchresults?api-version=7.1" -Method POST -Headers $hdr -Body $body -ContentType "application/json"
+   ```
+3. **List commits touching the file** (most recent = latest editor, earliest = creator):
+   ```powershell
+   $path = "/GenevaSrc/MonitorsV2/<monitorId>.json"
+   $enc = [System.Web.HttpUtility]::UrlEncode($path)
+   Invoke-RestMethod -Uri "https://dev.azure.com/o365exchange/_apis/git/repositories/c6b8ccba-d911-4d86-afa2-4bc6b795045d/commits?searchCriteria.itemPath=$enc&api-version=7.1" -Headers $hdr
+   ```
+   Ignore merge commits authored by `Jarvis MTA` — that's the auto-merge bot. The PR id is in the merge-commit message (`Merge pull request <prId>`).
+4. **Get the PR — author, reviewers, votes.** Use the org-level endpoint (project-scoped one 400s for cross-project PR lookups):
+   ```powershell
+   $pr = Invoke-RestMethod -Uri "https://dev.azure.com/o365exchange/_apis/git/repositories/c6b8ccba-d911-4d86-afa2-4bc6b795045d/pullRequests/<prId>?api-version=7.1" -Headers $hdr
+   $pr.createdBy.uniqueName                       # the real author
+   $pr.reviewers | ? { $_.vote -gt 0 } | % { $_.uniqueName }   # approvers (vote 5/10) — these are the second-best contacts
+   ```
+   Also fetch `pullRequests/<prId>/commits` — the commit `author.email` is the actual engineer (the merge commit hides them).
+5. **Resolve aliases to real names** via the IdentityPicker:
+   ```powershell
+   $body = '{"query":"<alias>@microsoft.com","identityTypes":["user"],"operationScopes":["ims","source"],"properties":["DisplayName","Mail","JobTitle","Department"]}'
+   Invoke-RestMethod -Uri "https://dev.azure.com/o365exchange/_apis/IdentityPicker/Identities?api-version=7.1-preview.1" -Method POST -Headers $hdr -Body $body -ContentType "application/json"
+   ```
+6. **Report**: monitor name + id, file path, PR link, **PR author** (best contact), **approving reviewers** (good fallbacks), and the most-recent committer if different.
+
+Notes:
+- For monitors that aren't in `MonitorsCompSyd` (e.g. AugLoop, Substrate), repeat step 2 against the relevant repo. The `MDM-Ext-*` value in the incident's `createdBy` field hints at the source system.
+- Auth: all the calls above use the standard ADO AAD scope — `az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798`.
+
 ## Notes
 
-- Follow the response-time SLA in the OCE wiki for acks and mitigation comments.
+- **Always read the TSG wiki** before doing anything destructive — most issues have a known mitigation there.
+- For area-path → owner lookups, see the generated report at `C:\repos\area-path-owners.md`.
+- For monitor-fired incidents, follow the *Finding the owner of a monitor-fired incident* playbook above — PR author + approvers are usually the right SMEs.
+- ICM acks/mitigation comments must follow the team's response-time SLA documented in the OCE wiki.
 - Don't auto-close or transfer an incident without confirming with the assigned engineer.
