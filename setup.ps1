@@ -108,11 +108,11 @@ if (-not (Test-Path $skillWordCopilotOncallDir)) {
 }
 Set-DotfileLink -Path "$skillWordCopilotOncallDir\SKILL.md" -Target "$PSScriptRoot\skills\word-copilot-oncall\SKILL.md"
 
-$skillOfficeSerbiaSubDir = "$skillsDir\office-serbia-sub"
+$skillOfficeSerbiaSubDir = "$skillsDir\office-serbia-azure-sub"
 if (-not (Test-Path $skillOfficeSerbiaSubDir)) {
     New-Item -ItemType Directory -Path $skillOfficeSerbiaSubDir -Force | Out-Null
 }
-Set-DotfileLink -Path "$skillOfficeSerbiaSubDir\SKILL.md" -Target "$PSScriptRoot\skills\office-serbia-sub\SKILL.md"
+Set-DotfileLink -Path "$skillOfficeSerbiaSubDir\SKILL.md" -Target "$PSScriptRoot\skills\office-serbia-azure-sub\SKILL.md"
 
 # AutoHotkey: install if missing, link script to Startup, and run it
 $ahkExe = Get-Command "AutoHotkey64.exe" -ErrorAction SilentlyContinue
