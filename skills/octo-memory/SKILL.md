@@ -1,0 +1,80 @@
+---
+name: octo-memory
+description: Sync and load Dimi's personal "Octo" memory from the nidimitr_microsoft/octo-memory repo, then use MEMORY.md as an index to navigate to the right context. Use when the user says "/octo-memory", "octo memory", "load my memory", "check octo memory", or asks a question that likely needs their persisted personal/work context (team, ADO area owners, azure admin recipes, daily logs, preferences, hard rules).
+user-invokable: true
+---
+
+# octo-memory
+
+Reuse the personal memory files Dimi keeps in the private GitHub repo
+`nidimitr_microsoft/octo-memory`. On invocation, sync the repo to get the latest, then read
+`MEMORY.md` (the index) and navigate into whatever topic files are relevant to the current task.
+
+Local clone path: `C:\repos\octo-memory`
+Remote: `https://github.com/nidimitr_microsoft/octo-memory` (private, default branch `main`)
+
+## Steps
+
+### 1. Sync the repo (pull latest)
+
+The repo is private and readable by the `nidimitr_microsoft` GitHub account. If a git/gh
+operation fails due to permissions, switch accounts with `gh auth switch --user nidimitr_microsoft`
+and retry.
+
+- **If `C:\repos\octo-memory` already exists:** pull latest.
+  ```powershell
+  git -C "C:\repos\octo-memory" pull --ff-only
+  ```
+- **If it does not exist:** clone it.
+  ```powershell
+  git clone https://github.com/nidimitr_microsoft/octo-memory.git "C:\repos\octo-memory"
+  ```
+
+If `pull` fails because of local changes, report it to the user rather than discarding anything.
+
+### 2. Read the index
+
+Read `C:\repos\octo-memory\MEMORY.md`. It is the master index and contains:
+- **About / User** — who Dimi is (role, location, timezone, email).
+- **Topic Files** — links to focused files (relative paths in the repo), each with a one-line
+  description of what it holds and when to read it.
+- **Communication Style, Key Facts, Hard Rules** — durable preferences and non-negotiable rules.
+- **Agent Skills** — Octo's own skill catalog (informational).
+
+Treat `MEMORY.md` as a routing table, not the whole answer. Skim the Topic Files list and note
+which files map to the user's current need.
+
+### 3. Navigate to the relevant context
+
+Based on the user's question / current task, open the specific topic file(s) referenced in
+`MEMORY.md` rather than reading everything. Examples of the mapping:
+- Team / direct reports / stakeholders -> `team.md`
+- ADO area/domain ownership & routing -> `area-owners.md`
+- Azure subscription / role-assignment recipes -> `azure-admin.md`
+- Kusto clusters & MCP setup -> `kusto.md`
+- Codespaces setup -> `codespaces.md`
+- Word team knowledge base notes -> `word-kb.md`
+- Agency / Midgard platform -> `agency-midgard.md`
+- What happened on a given day -> `daily-logs/YYYY-MM-DD.md`
+- Persistent task list -> `TODO.md`
+
+If the user's request is open-ended ("load my memory", "what do you know about me"), summarize the
+User + Key Facts + Hard Rules sections from `MEMORY.md` and list the available topic files so they
+can point you at one.
+
+### 4. Apply the context
+
+Use the loaded facts, preferences, and hard rules to inform your response and any subsequent work
+in this session. Honor the Hard Rules from `MEMORY.md` (they are explicit user preferences).
+
+## Notes
+
+- **Read-only by default.** This skill loads context; it does not edit or push memory files unless
+  the user explicitly asks you to update them.
+- **Don't over-read.** `MEMORY.md` links many topic files — only open the ones relevant to the task.
+- **Path is Windows-style** (`C:\repos\octo-memory`). Topic file links inside `MEMORY.md` are
+  repo-relative POSIX paths; resolve them against `C:\repos\octo-memory\`.
+- Some links in `MEMORY.md` point at paths that live in Octo's runtime (e.g. `system/…`,
+  `user-data/…`) and may not exist in this repo clone — skip any that aren't present.
+- Auth: the active `gh`/git account must be `nidimitr_microsoft`. Use `gh auth switch` if a
+  pull/clone is denied.

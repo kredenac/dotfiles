@@ -114,6 +114,12 @@ if (-not (Test-Path $skillOfficeSerbiaSubDir)) {
 }
 Set-DotfileLink -Path "$skillOfficeSerbiaSubDir\SKILL.md" -Target "$PSScriptRoot\skills\office-serbia-azure-sub\SKILL.md"
 
+$skillOctoMemoryDir = "$skillsDir\octo-memory"
+if (-not (Test-Path $skillOctoMemoryDir)) {
+    New-Item -ItemType Directory -Path $skillOctoMemoryDir -Force | Out-Null
+}
+Set-DotfileLink -Path "$skillOctoMemoryDir\SKILL.md" -Target "$PSScriptRoot\skills\octo-memory\SKILL.md"
+
 # AutoHotkey: install if missing, link script to Startup, and run it
 $ahkExe = Get-Command "AutoHotkey64.exe" -ErrorAction SilentlyContinue
 if (-not $ahkExe) {
