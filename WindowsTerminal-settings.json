@@ -26,36 +26,36 @@
     "keybindings": 
     [
         {
-            "id": "Terminal.DuplicatePaneAuto",
-            "keys": "alt+shift+d"
-        },
-        {
             "id": "User.sendInput.8F63D3A9",
             "keys": "shift+enter"
+        },
+        {
+            "id": "Terminal.DuplicatePaneAuto",
+            "keys": "alt+shift+d"
         },
         {
             "id": "User.copy.A33D4A0E",
             "keys": "ctrl+shift+c"
         },
         {
-            "id": "Terminal.DuplicatePaneRight",
-            "keys": "ctrl+shift+d"
-        },
-        {
             "id": "Terminal.CopyToClipboard",
             "keys": "ctrl+c"
+        },
+        {
+            "id": "Terminal.DuplicatePaneRight",
+            "keys": "ctrl+shift+d"
         },
         {
             "id": "Terminal.DuplicatePaneDown",
             "keys": "ctrl+shift+s"
         },
         {
-            "id": "Terminal.FindText",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "id": "Terminal.PasteFromClipboard",
             "keys": "ctrl+v"
+        },
+        {
+            "id": "Terminal.FindText",
+            "keys": "ctrl+shift+f"
         }
     ],
     "newTabMenu": 
@@ -100,6 +100,12 @@
                 "opacity": 90,
                 "startingDirectory": "C:\\repos",
                 "useAcrylic": true
+            },
+            {
+                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+                "hidden": false,
+                "name": "Git Bash",
+                "source": "Git"
             }
         ]
     },
