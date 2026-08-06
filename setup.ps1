@@ -55,18 +55,6 @@ Set-DotfileLink -Path "$copilotDir\settings.json" -Target "$PSScriptRoot\.copilo
 Set-DotfileLink -Path "$copilotDir\mcp-config.json" -Target "$PSScriptRoot\.copilot\mcp-config.json"
 Set-DotfileLink -Path "$copilotDir\permissions-config.json" -Target "$PSScriptRoot\.copilot\permissions-config.json"
 
-# Peon-ping: install if missing, then link config
-$peonPingDir = "$env:USERPROFILE\.claude\hooks\peon-ping"
-if (-not (Test-Path $peonPingDir)) {
-    Write-Host "Installing peon-ping..." -ForegroundColor Yellow
-    & ([scriptblock]::Create((Invoke-WebRequest -Uri "https://raw.githubusercontent.com/PeonPing/peon-ping/main/install.ps1" -UseBasicParsing).Content)) -Packs peasant
-}
-if (Test-Path $peonPingDir) {
-    Set-DotfileLink -Path "$peonPingDir\config.json" -Target "$PSScriptRoot\peon-ping\config.json"
-} else {
-    Write-Host "⚠ Peon-ping installation failed, skipping config link" -ForegroundColor Yellow
-}
-
 # Claude Code scripts
 $scriptsDir = "$env:USERPROFILE\.claude\scripts"
 if (-not (Test-Path $scriptsDir)) {
