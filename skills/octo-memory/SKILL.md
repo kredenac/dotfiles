@@ -15,22 +15,28 @@ Remote: `https://github.com/nidimitr_microsoft/octo-memory` (private, default br
 
 ## Steps
 
-### 1. Sync the repo (pull latest)
+### 1. Sync the repo
 
 The repo is private and readable by the `nidimitr_microsoft` GitHub account. If a git/gh
 operation fails due to permissions, switch accounts with `gh auth switch --user nidimitr_microsoft`
 and retry.
 
-- **If `C:\repos\octo-memory` already exists:** pull latest.
+- **If `C:\repos\octo-memory` already exists:** commit any local changes, rebase onto the latest
+  remote changes, then push.
   ```powershell
-  git -C "C:\repos\octo-memory" pull --ff-only
+  if (git -C "C:\repos\octo-memory" status --porcelain) {
+      git -C "C:\repos\octo-memory" add -A
+      git -C "C:\repos\octo-memory" commit -m "sync: update memory"
+  }
+  git -C "C:\repos\octo-memory" pull --rebase
+  git -C "C:\repos\octo-memory" push
   ```
 - **If it does not exist:** clone it.
   ```powershell
   git clone https://github.com/nidimitr_microsoft/octo-memory.git "C:\repos\octo-memory"
   ```
 
-If `pull` fails because of local changes, report it to the user rather than discarding anything.
+If the commit, rebase, or push fails, report it to the user rather than discarding anything.
 
 ### 2. Read the index
 
@@ -52,11 +58,6 @@ Based on the user's question / current task, open the specific topic file(s) ref
 - ADO area/domain ownership & routing -> `area-owners.md`
 - Azure subscription / role-assignment recipes -> `azure-admin.md`
 - Kusto clusters & MCP setup -> `kusto.md`
-- Codespaces setup -> `codespaces.md`
-- Word team knowledge base notes -> `word-kb.md`
-- Agency / Midgard platform -> `agency-midgard.md`
-- What happened on a given day -> `daily-logs/YYYY-MM-DD.md`
-- Persistent task list -> `TODO.md`
 
 If the user's request is open-ended ("load my memory", "what do you know about me"), summarize the
 User + Key Facts + Hard Rules sections from `MEMORY.md` and list the available topic files so they
@@ -69,8 +70,8 @@ in this session. Honor the Hard Rules from `MEMORY.md` (they are explicit user p
 
 ## Notes
 
-- **Read-only by default.** This skill loads context; it does not edit or push memory files unless
-  the user explicitly asks you to update them.
+- **Content is read-only by default.** This skill does not create or edit memory content unless the
+  user explicitly asks, but it commits and pushes pre-existing local changes during synchronization.
 - **Don't over-read.** `MEMORY.md` links many topic files — only open the ones relevant to the task.
 - **Path is Windows-style** (`C:\repos\octo-memory`). Topic file links inside `MEMORY.md` are
   repo-relative POSIX paths; resolve them against `C:\repos\octo-memory\`.

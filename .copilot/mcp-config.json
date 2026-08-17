@@ -66,6 +66,17 @@
         "calendar"
       ]
     },
+    "workiq": {
+      "tools": [
+        "*"
+      ],
+      "type": "local",
+      "command": "agency",
+      "args": [
+        "mcp",
+        "workiq"
+      ]
+    },
     "icm": {
       "type": "local",
       "command": "agency",
