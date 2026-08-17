@@ -36,7 +36,20 @@ and retry.
   git clone https://github.com/nidimitr_microsoft/octo-memory.git "C:\repos\octo-memory"
   ```
 
-If the commit, rebase, or push fails, report it to the user rather than discarding anything.
+If the rebase has conflicts, resolve them autonomously rather than leaving the repository paused:
+
+1. Inspect the local commit and upstream changes for every conflicted file.
+2. Preserve both sides when changes are independent. For content conflicts, keep the latest
+   upstream structure and reapply the local intent.
+3. Treat a locally deleted file as an intentional deletion even when upstream modified it. Remove
+   the file, remove any newly introduced references to it, and record a concise summary of the
+   deleted content for the user.
+4. Continue the rebase non-interactively, verify the index has no stale links to deleted files,
+   and push.
+
+Use `git rebase --abort` only when the local intent cannot be determined safely. Never discard
+local or upstream changes merely to make the rebase succeed. If commit, rebase, or push still fails
+after resolving inferable conflicts, report the exact blocker to the user.
 
 ### 2. Read the index
 
