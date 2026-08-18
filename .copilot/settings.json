@@ -27,7 +27,7 @@
   "enabledMcpServers": [
     "computer-use"
   ],
-  "model": "claude-opus-4.7-high",
+  "model": "gpt-5.6-sol",
   "effortLevel": "high",
   "contextTier": "long_context",
   "includeCoAuthoredBy": false
