@@ -35,7 +35,13 @@ New-Alias -Name gsq -Value GitSquashUnpushed
 $env:COPILOT_ALLOW_ALL = "true"
 $env:COPILOT_GITHUB_TABS = "false"
 
-function Invoke-Copilot { agency copilot --yolo @args }
+function Invoke-Copilot {
+    if (Get-Command agency -ErrorAction SilentlyContinue) {
+        agency copilot --yolo @args
+    } else {
+        copilot --yolo @args
+    }
+}
 Set-Alias -Name c -Value Invoke-Copilot
 
 # Import posh-git for Git prompt integration
