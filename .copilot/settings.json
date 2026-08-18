@@ -10,9 +10,7 @@
       }
     }
   },
-  "disabledSkills": [
-    "fix-week-bugs"
-  ],
+  "disabledSkills": [],
   "showReasoning": false,
   "keepAlive": "busy",
   "continueOnAutoMode": true,
@@ -24,9 +22,7 @@
   "skillDirectories": [
     "C:\\repos\\dotfiles\\skills"
   ],
-  "enabledMcpServers": [
-    "computer-use"
-  ],
+  "enabledMcpServers": [],
   "model": "gpt-5.6-sol",
   "effortLevel": "high",
   "contextTier": "long_context",
