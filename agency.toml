@@ -1,5 +1,9 @@
 # Agency Config Docs: https://eng.ms/docs/coreai/devdiv/one-engineering-system-1es/1es-jacekcz/startrightgitops/agency/cli/agency-config
 
+[[remote_config]]
+git = "https://github.com/opg-microsoft/wordengai-agents"
+branch = "main"
+
 [mcps.builtins]
 # ── Currently enabled ──
 # ado              = { type = "ado", organization = "office" }
