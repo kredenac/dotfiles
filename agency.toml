@@ -4,6 +4,14 @@
 git = "https://github.com/opg-microsoft/wordengai-agents"
 branch = "main"
 
+[[plugins.default]]
+plugin = "github:opg-microsoft/wordengai-agents:teams/shared-all-word/plugins/word-knowledgebase"
+engines = ["copilot"]
+
+[[plugins.default]]
+plugin = "github:opg-microsoft/wordengai-agents:users/t-mmilosevic/plugins/one-shot-telemetry-agent"
+engines = ["copilot"]
+
 [mcps.builtins]
 # ── Currently enabled ──
 # ado              = { type = "ado", organization = "office" }

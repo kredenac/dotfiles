@@ -136,12 +136,26 @@ if ($ahkPath) {
     }
 }
 
+# Agency
+if (-not (Get-Command "agency" -ErrorAction SilentlyContinue)) {
+    Write-Host "Installing Agency..." -ForegroundColor Yellow
+    Invoke-Expression "& { $(Invoke-RestMethod https://aka.ms/InstallTool.ps1) } agency"
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" +
+        [System.Environment]::GetEnvironmentVariable("Path", "User")
+    Write-Host "✓ Agency installed" -ForegroundColor Green
+} else {
+    Write-Host "· Agency already installed" -ForegroundColor DarkGray
+}
+
 # Agency global config
 $agencyDir = "$env:LOCALAPPDATA\agency"
 if (-not (Test-Path $agencyDir)) {
     New-Item -ItemType Directory -Path $agencyDir -Force | Out-Null
 }
-Set-DotfileLink -Path "$agencyDir\agency.toml" -Target "$PSScriptRoot\agency.toml"
+Copy-Item -Path "$PSScriptRoot\agency.toml" -Destination "$agencyDir\agency.toml" -Force
+Write-Host "✓ Agency config copied" -ForegroundColor Green
+agency config check | Out-Null
+Write-Host "✓ Agency config validated" -ForegroundColor Green
 
 # Clean up legacy location if it's a symlink we previously created
 $legacyLink = "$env:USERPROFILE\.agency\agency.toml"

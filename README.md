@@ -11,6 +11,7 @@ I'm testing these to be copied by the script which setups the fresh OS.
 | Windows Terminal | LocalState | Themes, profiles |
 | Claude Code | `~/.claude/` | `settings.json`, `claude.md`, hooks, skills |
 | **GitHub Copilot CLI** | `~/.copilot/` | `settings.json`, `mcp-config.json`, `permissions-config.json` |
+| **Agency** | `%LOCALAPPDATA%\agency\agency.toml` | Remote Word profiles and default Copilot plugins |
 
 ## Setup
 
@@ -19,6 +20,10 @@ git clone https://github.com/<you>/dotfiles C:\repos\dotfiles
 cd C:\repos\dotfiles
 .\setup.ps1
 ```
+
+The setup script installs Agency when needed and copies `agency.toml`. Agency then
+loads the shared Word profiles plus the Word knowledge-base and one-shot telemetry
+plugins for `agency copilot` on every configured device.
 
 ## Tips
 
@@ -44,4 +49,3 @@ To add MCP servers, edit `.copilot/mcp-config.json`:
   }
 }
 ```
-
