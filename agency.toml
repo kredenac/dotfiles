@@ -1,16 +1,5 @@
 # Agency Config Docs: https://eng.ms/docs/coreai/devdiv/one-engineering-system-1es/1es-jacekcz/startrightgitops/agency/cli/agency-config
 
-[[plugins.default]]
-plugin = "market:word-agent-toolkit@opg-microsoft/wordengai-agents"
-engines = ["copilot"]
-
-[[plugins.default]]
-plugin = "market:word-knowledgebase@opg-microsoft/wordengai-agents"
-engines = ["copilot"]
-
-[[plugins.default]]
-plugin = "market:one-shot-telemetry-agent@opg-microsoft/wordengai-agents"
-engines = ["copilot"]
 
 [mcps.builtins]
 # ── Currently enabled ──
@@ -46,3 +35,17 @@ workiq           = false
 perf-pas         = false
 domain-lens      = false
 logger           = false
+
+[plugins]
+
+[[plugins.default]]
+plugin = "market:word-agent-toolkit@opg-microsoft/wordengai-agents"
+engines = ["copilot"]
+
+[[plugins.default]]
+plugin = "market:word-knowledgebase@opg-microsoft/wordengai-agents"
+engines = ["copilot"]
+
+[[plugins.default]]
+plugin = "market:one-shot-telemetry-agent@opg-microsoft/wordengai-agents"
+engines = ["copilot"]
