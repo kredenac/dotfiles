@@ -1,0 +1,48 @@
+$schema: "1.0"
+name: dimi-devbox
+description: Personal Windows developer setup from the kredenac dotfiles repository.
+
+userTasks:
+  - name: ~/winget
+    displayName: Install Visual Studio Code
+    parameters:
+      package: Microsoft.VisualStudioCode
+
+  - name: ~/winget
+    displayName: Install Windows Terminal
+    parameters:
+      package: Microsoft.WindowsTerminal
+
+  - name: ~/winget
+    displayName: Install PowerShell
+    parameters:
+      package: Microsoft.PowerShell
+
+  - name: ~/winget
+    displayName: Install GitHub CLI
+    parameters:
+      package: GitHub.cli
+
+  - name: ~/winget
+    displayName: Install Azure CLI
+    parameters:
+      package: Microsoft.AzureCLI
+
+  - name: ~/gitclone
+    displayName: Clone personal dotfiles
+    parameters:
+      repositoryUrl: https://github.com/kredenac/dotfiles.git
+      directory: C:\repos
+      branch: main
+
+  - name: ~/powershell
+    displayName: Apply personal dotfiles
+    parameters:
+      command: |
+        $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" +
+          [Environment]::GetEnvironmentVariable("Path", "User")
+
+        az extension add --name azure-devops --yes
+
+        Set-Location C:\repos\dotfiles
+        .\setup.ps1 -SkipAutoHotkey

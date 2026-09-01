@@ -5,6 +5,10 @@
 # correct dotfiles source. If so, it's left alone. Only creates/replaces
 # when missing or pointing elsewhere.
 
+param(
+    [switch]$SkipAutoHotkey
+)
+
 # Helper: creates a symlink only if not already correctly linked
 function Set-DotfileLink {
     param(
@@ -108,31 +112,33 @@ if (-not (Test-Path $skillOctoMemoryDir)) {
 }
 Set-DotfileLink -Path "$skillOctoMemoryDir\SKILL.md" -Target "$PSScriptRoot\skills\octo-memory\SKILL.md"
 
-# AutoHotkey: install if missing, link script to Startup, and run it
-$ahkExe = Get-Command "AutoHotkey64.exe" -ErrorAction SilentlyContinue
-if (-not $ahkExe) {
-    $ahkExe = Get-Command "AutoHotkey32.exe" -ErrorAction SilentlyContinue
-}
-if (-not $ahkExe) {
-    Write-Host "Installing AutoHotkey..." -ForegroundColor Yellow
-    winget install AutoHotkey.AutoHotkey --accept-source-agreements --accept-package-agreements | Out-Null
-    Write-Host "✓ AutoHotkey installed" -ForegroundColor Green
-} else {
-    Write-Host "· AutoHotkey already installed" -ForegroundColor DarkGray
-}
-$startupDir = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
-Set-DotfileLink -Path "$startupDir\CleanPaste.ahk" -Target "$PSScriptRoot\scripts\CleanPaste.ahk"
-# Run it now so the hotkey is active immediately
-$ahkPath = (Get-Command "AutoHotkey64.exe" -ErrorAction SilentlyContinue).Source
-if (-not $ahkPath) { $ahkPath = (Get-Command "AutoHotkey32.exe" -ErrorAction SilentlyContinue).Source }
-if ($ahkPath) {
-    $running = Get-Process -Name "AutoHotkey64", "AutoHotkey32" -ErrorAction SilentlyContinue |
-        Where-Object { $_.CommandLine -like "*CleanPaste*" }
-    if (-not $running) {
-        Start-Process $ahkPath -ArgumentList "$PSScriptRoot\scripts\CleanPaste.ahk"
-        Write-Host "✓ CleanPaste.ahk started" -ForegroundColor Green
+if (-not $SkipAutoHotkey) {
+    # AutoHotkey: install if missing, link script to Startup, and run it
+    $ahkExe = Get-Command "AutoHotkey64.exe" -ErrorAction SilentlyContinue
+    if (-not $ahkExe) {
+        $ahkExe = Get-Command "AutoHotkey32.exe" -ErrorAction SilentlyContinue
+    }
+    if (-not $ahkExe) {
+        Write-Host "Installing AutoHotkey..." -ForegroundColor Yellow
+        winget install AutoHotkey.AutoHotkey --accept-source-agreements --accept-package-agreements | Out-Null
+        Write-Host "✓ AutoHotkey installed" -ForegroundColor Green
     } else {
-        Write-Host "· CleanPaste.ahk already running" -ForegroundColor DarkGray
+        Write-Host "· AutoHotkey already installed" -ForegroundColor DarkGray
+    }
+    $startupDir = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
+    Set-DotfileLink -Path "$startupDir\CleanPaste.ahk" -Target "$PSScriptRoot\scripts\CleanPaste.ahk"
+    # Run it now so the hotkey is active immediately
+    $ahkPath = (Get-Command "AutoHotkey64.exe" -ErrorAction SilentlyContinue).Source
+    if (-not $ahkPath) { $ahkPath = (Get-Command "AutoHotkey32.exe" -ErrorAction SilentlyContinue).Source }
+    if ($ahkPath) {
+        $running = Get-Process -Name "AutoHotkey64", "AutoHotkey32" -ErrorAction SilentlyContinue |
+            Where-Object { $_.CommandLine -like "*CleanPaste*" }
+        if (-not $running) {
+            Start-Process $ahkPath -ArgumentList "$PSScriptRoot\scripts\CleanPaste.ahk"
+            Write-Host "✓ CleanPaste.ahk started" -ForegroundColor Green
+        } else {
+            Write-Host "· CleanPaste.ahk already running" -ForegroundColor DarkGray
+        }
     }
 }
 

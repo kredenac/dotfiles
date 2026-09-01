@@ -10,7 +10,7 @@
 # es-chat          = true
 
 # ── All built-in MCPs (disabled by default — set to true to enable) ──
-bluebird         = false
+bluebird         = true
 msft-learn       = false
 watson           = false
 s360-breeze      = false
@@ -38,9 +38,9 @@ logger           = false
 
 [plugins]
 
-[[plugins.default]]
-plugin = "market:word-agent-toolkit@opg-microsoft/wordengai-agents"
-engines = ["copilot"]
+# [[plugins.default]]
+# plugin = "market:word-agent-toolkit@opg-microsoft/wordengai-agents"
+# engines = ["copilot"]
 
 [[plugins.default]]
 plugin = "market:word-knowledgebase@opg-microsoft/wordengai-agents"
@@ -49,3 +49,4 @@ engines = ["copilot"]
 [[plugins.default]]
 plugin = "market:one-shot-telemetry-agent@opg-microsoft/wordengai-agents"
 engines = ["copilot"]
+cache_policy = "force-refresh"
