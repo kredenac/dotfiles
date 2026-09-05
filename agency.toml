@@ -46,7 +46,7 @@ logger           = false
 plugin = "market:word-knowledgebase@opg-microsoft/wordengai-agents"
 engines = ["copilot"]
 
-[[plugins.default]]
-plugin = "market:one-shot-telemetry-agent@opg-microsoft/wordengai-agents"
-engines = ["copilot"]
-cache_policy = "force-refresh"
+# [[plugins.default]]
+# plugin = "market:one-shot-telemetry-agent@opg-microsoft/wordengai-agents"
+# engines = ["copilot"]
+# cache_policy = "force-refresh"
