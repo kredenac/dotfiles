@@ -1,5 +1,16 @@
 # Agency Config Docs: https://eng.ms/docs/coreai/devdiv/one-engineering-system-1es/1es-jacekcz/startrightgitops/agency/cli/agency-config
 
+[[remote_config]]
+git = "https://github.com/opg-microsoft/wordengai-agents"
+branch = "main"
+
+[[plugins.default]]
+plugin = "github:opg-microsoft/wordengai-agents:teams/shared-all-word/plugins/word-knowledgebase"
+engines = ["copilot"]
+
+[[plugins.default]]
+plugin = "github:opg-microsoft/wordengai-agents:users/t-mmilosevic/plugins/one-shot-telemetry-agent"
+engines = ["copilot"]
 
 [mcps.builtins]
 # ── Currently enabled ──
@@ -10,7 +21,7 @@
 # es-chat          = true
 
 # ── All built-in MCPs (disabled by default — set to true to enable) ──
-bluebird         = true
+bluebird         = false
 msft-learn       = false
 watson           = false
 s360-breeze      = false
@@ -35,18 +46,3 @@ workiq           = false
 perf-pas         = false
 domain-lens      = false
 logger           = false
-
-[plugins]
-
-# [[plugins.default]]
-# plugin = "market:word-agent-toolkit@opg-microsoft/wordengai-agents"
-# engines = ["copilot"]
-
-[[plugins.default]]
-plugin = "market:word-knowledgebase@opg-microsoft/wordengai-agents"
-engines = ["copilot"]
-
-# [[plugins.default]]
-# plugin = "market:one-shot-telemetry-agent@opg-microsoft/wordengai-agents"
-# engines = ["copilot"]
-# cache_policy = "force-refresh"
