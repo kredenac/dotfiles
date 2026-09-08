@@ -37,7 +37,7 @@ $env:COPILOT_GITHUB_TABS = "false"
 
 function Invoke-Copilot {
     if (Get-Command agency -ErrorAction SilentlyContinue) {
-        agency copilot --yolo @args
+        agency copilot --yolo --profile word-copilot @args
     } else {
         copilot --yolo @args
     }

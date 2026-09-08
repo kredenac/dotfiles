@@ -1,6 +1,7 @@
 # Open-CopilotQuad.ps1
 # Splits the current Windows Terminal pane into a 2x2 grid, running
-# `c` (agency copilot --yolo) in each pane. All panes start in C:\repos.
+# `c` (agency copilot --yolo --profile word-copilot) in each pane.
+# All panes start in C:\repos.
 #
 # Wired up via the "Copilot 2x2" profile in WindowsTerminal-settings.json.
 
