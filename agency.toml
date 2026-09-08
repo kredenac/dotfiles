@@ -12,10 +12,6 @@ engines = ["copilot"]
 plugin = "github:opg-microsoft/wordengai-agents:users/t-mmilosevic/plugins/one-shot-telemetry-agent"
 engines = ["copilot"]
 
-[[plugins.default]]
-plugin = "market:rig@opg-microsoft/wordengai-agents"
-engines = ["copilot"]
-
 [mcps.builtins]
 # ── Currently enabled ──
 # ado              = { type = "ado", organization = "office" }
