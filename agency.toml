@@ -12,6 +12,10 @@ engines = ["copilot"]
 plugin = "github:opg-microsoft/wordengai-agents:users/t-mmilosevic/plugins/one-shot-telemetry-agent"
 engines = ["copilot"]
 
+[[plugins.default]]
+plugin = "market:rig@opg-microsoft/wordengai-agents"
+engines = ["copilot"]
+
 [mcps.builtins]
 # ── Currently enabled ──
 # ado              = { type = "ado", organization = "office" }
@@ -21,7 +25,7 @@ engines = ["copilot"]
 # es-chat          = true
 
 # ── All built-in MCPs (disabled by default — set to true to enable) ──
-bluebird         = false
+bluebird         = true
 msft-learn       = false
 watson           = false
 s360-breeze      = false
