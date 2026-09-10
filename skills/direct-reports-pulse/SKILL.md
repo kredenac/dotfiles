@@ -17,14 +17,15 @@ Generate a concise weekly engineering pulse for Dimi's current direct reports fr
 5. Query the latest `AzureActiveDirectory.AADUser` rows and select employees whose `ReportsToEmailName` equals `nidimitr`, excluding guests and service accounts. Compare the result with `team.md`:
    - Use AAD as the current membership source.
    - Use `team.md` for aliases, leave status, GitHub identities, and display notes.
+   - Add Dimi (`nidimitr`) as one additional report person after roster reconciliation. Do not treat him as an AAD roster addition or include him in roster-change comparisons.
    - Show additions, removals, or alias mismatches before the metrics.
    - Never silently include former reports or close partners.
 6. Query PR rows directly from `AzureDevOps.PullRequest` and `GitHub.EMU.PullRequest` for the report week plus the three preceding weeks. Resolve GitHub authors through the latest `GitHub.EMU.User` row and Microsoft email alias. When a current or historical Microsoft email does not normalize to the ADO alias, reconcile it only through an exact GitHub identity recorded in `team.md`; list identities that still cannot be resolved. Never reference `GitHub.Proxima`; `msft.ghe.com` activity is outside this report's declared scope.
-7. Retain rows whose normalized author alias matches the verified direct-report aliases. Deduplicate ADO rows by organization, repository ID, and PR ID, and GitHub rows by hostname, organization ID, repository ID, and PR ID using the latest ETL row. Keep default/trunk-target PRs, apply `config\trunk-branches.json`, and classify title chores with EngPulse's `scripts\shared\chore_filter.py`. Exclude chores from headline metrics.
+7. Retain rows whose normalized author alias matches the verified direct-report aliases or `nidimitr`. Deduplicate ADO rows by organization, repository ID, and PR ID, and GitHub rows by hostname, organization ID, repository ID, and PR ID using the latest ETL row. Keep default/trunk-target PRs, apply `config\trunk-branches.json`, and classify title chores with EngPulse's `scripts\shared\chore_filter.py`. Exclude chores from headline metrics.
 8. Produce a compact Markdown report with exactly these sections:
    1. **Roster changes** - only when AAD and `team.md` differ.
    2. **Team snapshot** - opened PRs, merged PRs, merge rate, active contributors, merged PRs per active contributor, median time to merge, and P80 time to merge. Show the report week and trailing four weeks side by side.
-   3. **By direct report** - person, area, opened, merged, active PRs, median time to merge, and top repositories. Include zero-activity and leave rows; do not rank people or apply red/green performance labels.
+   3. **By direct report** - person, area, opened, merged, active PRs, median time to merge, and top repositories. Include Dimi as an additional person with area `Management`, plus all zero-activity and leave rows; do not rank people or apply red/green performance labels.
    4. **Notable work** - 3-7 evidence-backed themes derived from PR titles and descriptions, with PR links. Separate facts from interpretation.
    5. **Data notes** - EngPulse source commit, window, included databases, explicit Proxima exclusion, filters, and missing identities.
 9. Compute time-to-merge from PR creation to merge/closure, subtracting weekend hours with EngPulse's UTC weekend convention. Label it **creation-to-merge** so it is not confused with EngPulse's draft-aware publish-to-merge metric. Use nearest-rank lower median and P80. Display `n/a` when the sample is empty and include the sample size for percentile metrics.
@@ -35,7 +36,7 @@ Generate a concise weekly engineering pulse for Dimi's current direct reports fr
 - This report is a management activity pulse, not an individual performance scorecard.
 - PR metrics cover Azure DevOps and `github.com` repositories represented in `GitHub.EMU`, including `opg-microsoft`. They intentionally exclude `msft.ghe.com`.
 - Work-item and incident metrics are intentionally excluded because direct-report ownership cannot be inferred reliably from broad area paths.
-- Query only verified direct-report aliases, not Dimi's full management chain.
+- Query only verified direct-report aliases plus Dimi (`nidimitr`), not Dimi's full management chain.
 - Do not edit KQL, EngPulse run-control settings, or report-server files.
 - Do not commit generated reports or EngPulse cache data.
 - Open the report only after the HTML file has been written successfully.
