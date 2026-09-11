@@ -56,6 +56,7 @@ if (-not (Test-Path $copilotDir)) {
     New-Item -ItemType Directory -Path $copilotDir -Force | Out-Null
 }
 Set-DotfileLink -Path "$copilotDir\settings.json" -Target "$PSScriptRoot\.copilot\settings.json"
+Set-DotfileLink -Path "$copilotDir\copilot-instructions.md" -Target "$PSScriptRoot\.copilot\copilot-instructions.md"
 if ($env:COMPUTERNAME -eq "DIMI-PC") {
     Write-Host "· mcp-config.json kept machine-local on DIMI-PC" -ForegroundColor DarkGray
 } else {

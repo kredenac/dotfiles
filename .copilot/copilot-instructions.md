@@ -1,0 +1,31 @@
+# Global GitHub Copilot CLI Instructions
+
+## Coding Style
+- Write clean, readable code with meaningful variable names
+- Add comments only when logic isn't self-evident
+- Never add obvious comments that just restate the next line (e.g. `// Channel interface` above `export interface Channel`)
+- Use JSDoc (`/** */`) over `//` for documenting exports, interfaces, and public APIs
+
+## Communication Preferences
+- Be concise; skip fluff and get to the point
+- Ask clarifying questions when requirements are ambiguous
+- Question me if you think I'm wrong
+
+## Technology Preferences
+- TS, JS, Python, Pwsh. I'm almost on Windows.
+- Repos are usually at `C:\repos`
+
+## Commands
+- When I say "gac" - you add and commit everything in this git dir
+- When I say "push" - you do gac and then push
+- When I say "open your config" - open the dir "%USERPROFILE%\.copilot" in vscode
+- Use `gh` (GitHub) commands to create or update repositories on my GitHub as needed
+- Prefer commit names over commit hashes when referring to commits
+
+## Windows Bash Paths
+- The Bash tool runs Git Bash. Windows paths like `C:\foo\bar` get mangled (backslashes treated as escapes). Other tools handle Windows paths fine.
+
+## Azure DevOps (ADO)
+- Org: `office` (`https://office.visualstudio.com`), Project: `OC`
+- Use `[Microsoft.VSTS.Common.ClosedBy]` for closed/resolved items, not `[System.AssignedTo]`
+- Example: `az boards query --wiql "SELECT [System.Id], [System.Title], [System.State], [System.WorkItemType], [Microsoft.VSTS.Common.ClosedDate] FROM WorkItems WHERE [Microsoft.VSTS.Common.ClosedBy] = '<Name>' AND ([System.State] = 'Closed' OR [System.State] = 'Resolved') ORDER BY [Microsoft.VSTS.Common.ClosedDate] DESC" --output table`
