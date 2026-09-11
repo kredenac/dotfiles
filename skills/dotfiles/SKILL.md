@@ -11,7 +11,7 @@ Sync the dotfiles repo (pull then push).
 ## Steps
 
 1. `cd C:/repos/dotfiles`
-2. If `%LOCALAPPDATA%\agency\agency.toml` exists, validate it with `agency config check`, then copy it to `C:/repos/dotfiles/agency.toml` so plugin installs and other global Agency changes are included in the sync.
+2. If `%LOCALAPPDATA%\agency\agency.toml` exists, preserve the tracked `remote_config` entries when merging live Agency changes into `C:/repos/dotfiles/agency.toml`; never replace the tracked file with the live file wholesale. Validate the merged config with `agency config check` and confirm `agency config profiles --json` contains `word-copilot` before committing it.
 3. Record the initially active GitHub account:
    `gh auth status --active --hostname github.com --json hosts --jq '.hosts["github.com"][0].login'`
 4. Switch GitHub authentication to the repository owner: `gh auth switch --hostname github.com --user kredenac`
