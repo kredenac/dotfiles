@@ -118,22 +118,30 @@ Set-DotfileLink -Path "$skillOctoMemoryDir\SKILL.md" -Target "$PSScriptRoot\skil
 
 if (-not $SkipAutoHotkey) {
     # AutoHotkey: install if missing, link script to Startup, and run it
-    $ahkExe = Get-Command "AutoHotkey64.exe" -ErrorAction SilentlyContinue
-    if (-not $ahkExe) {
-        $ahkExe = Get-Command "AutoHotkey32.exe" -ErrorAction SilentlyContinue
+    $ahkPath = (Get-Command "AutoHotkey64.exe" -ErrorAction SilentlyContinue).Source
+    if (-not $ahkPath) {
+        $ahkPath = (Get-Command "AutoHotkey32.exe" -ErrorAction SilentlyContinue).Source
     }
-    if (-not $ahkExe) {
+    if (-not $ahkPath) {
+        $ahkPath = @(
+            "$env:ProgramFiles\AutoHotkey\v2\AutoHotkey64.exe"
+            "${env:ProgramFiles(x86)}\AutoHotkey\v2\AutoHotkey32.exe"
+        ) | Where-Object { Test-Path $_ } | Select-Object -First 1
+    }
+    if (-not $ahkPath) {
         Write-Host "Installing AutoHotkey..." -ForegroundColor Yellow
         winget install AutoHotkey.AutoHotkey --accept-source-agreements --accept-package-agreements | Out-Null
         Write-Host "✓ AutoHotkey installed" -ForegroundColor Green
+        $ahkPath = @(
+            "$env:ProgramFiles\AutoHotkey\v2\AutoHotkey64.exe"
+            "${env:ProgramFiles(x86)}\AutoHotkey\v2\AutoHotkey32.exe"
+        ) | Where-Object { Test-Path $_ } | Select-Object -First 1
     } else {
         Write-Host "· AutoHotkey already installed" -ForegroundColor DarkGray
     }
     $startupDir = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
     Set-DotfileLink -Path "$startupDir\CleanPaste.ahk" -Target "$PSScriptRoot\scripts\CleanPaste.ahk"
     # Run it now so the hotkey is active immediately
-    $ahkPath = (Get-Command "AutoHotkey64.exe" -ErrorAction SilentlyContinue).Source
-    if (-not $ahkPath) { $ahkPath = (Get-Command "AutoHotkey32.exe" -ErrorAction SilentlyContinue).Source }
     if ($ahkPath) {
         $running = Get-Process -Name "AutoHotkey64", "AutoHotkey32" -ErrorAction SilentlyContinue |
             Where-Object { $_.CommandLine -like "*CleanPaste*" }
@@ -162,10 +170,22 @@ $agencyDir = "$env:LOCALAPPDATA\agency"
 if (-not (Test-Path $agencyDir)) {
     New-Item -ItemType Directory -Path $agencyDir -Force | Out-Null
 }
-Copy-Item -Path "$PSScriptRoot\agency.toml" -Destination "$agencyDir\agency.toml" -Force
+$agencyConfigPath = "$agencyDir\agency.toml"
+if ((Test-Path $agencyConfigPath) -and (Get-Item $agencyConfigPath).LinkType -eq 'SymbolicLink') {
+    Remove-Item $agencyConfigPath -Force
+}
+Copy-Item -Path "$PSScriptRoot\agency.toml" -Destination $agencyConfigPath -Force
 Write-Host "✓ Agency config copied" -ForegroundColor Green
 agency config check | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    throw "Agency config validation failed"
+}
 Write-Host "✓ Agency config validated" -ForegroundColor Green
+$agencyProfiles = agency config profiles --json | ConvertFrom-Json
+if (-not ($agencyProfiles | Where-Object name -eq "word-copilot")) {
+    throw "Agency profile 'word-copilot' was not resolved"
+}
+Write-Host "✓ Word Copilot profile available" -ForegroundColor Green
 
 # Clean up legacy location if it's a symlink we previously created
 $legacyLink = "$env:USERPROFILE\.agency\agency.toml"
