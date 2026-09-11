@@ -49,3 +49,6 @@ To add MCP servers, edit `.copilot/mcp-config.json`:
   }
 }
 ```
+
+On `DIMI-PC`, `setup.ps1` preserves the machine-local `~/.copilot/mcp-config.json`
+instead of replacing it with a symlink.
