@@ -1,7 +1,6 @@
 ---
 name: dotfiles
 description: Sync the dotfiles repo — pull remote changes and push local changes. Use when user says "sync dotfiles", "/dotfiles", or wants to update their dotfiles.
-user-invokable: true
 ---
 
 # dotfiles

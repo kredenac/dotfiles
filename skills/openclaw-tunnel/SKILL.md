@@ -1,7 +1,6 @@
 ---
 name: openclaw-tunnel
 description: Start or restore the Kutak OpenClaw SSH tunnel and open the local Octo chat. Use when the user says "open OpenClaw", "open Octo chat", "start the OpenClaw tunnel", "localhost 18789 is unavailable", or "/openclaw-tunnel".
-user-invokable: true
 ---
 
 # openclaw-tunnel

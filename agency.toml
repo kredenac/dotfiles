@@ -13,7 +13,7 @@ branch = "main"
 # es-chat          = true
 
 # ── All built-in MCPs (disabled by default — set to true to enable) ──
-bluebird         = true
+bluebird         = false
 msft-learn       = false
 watson           = false
 s360-breeze      = false
@@ -38,6 +38,12 @@ workiq           = false
 perf-pas         = false
 domain-lens      = false
 logger           = false
+computer-use = false
+
+[mcps.servers.bluebird]
+command = "agency"
+args = ["mcp", "bluebird"]
+tools = ["*"]
 
 [plugins]
 

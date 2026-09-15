@@ -1,7 +1,6 @@
 ---
 name: office-serbia-azure-sub
 description: Manage RBAC on the "Office Serbia - External" Azure subscription — elevate access via PIM programmatically and add/remove role assignments. Use when asked to grant, remove, or audit owner/contributor access on the Office Serbia (aka "office serbia extended/external") Azure subscription, or to activate PIM elevation there.
-user-invokable: true
 ---
 
 # office-serbia-azure-sub

@@ -1,7 +1,6 @@
 ---
 name: direct-reports-pulse
 description: Generate Dimi's lightweight weekly engineering report for his direct reports. Use for `/direct-reports-pulse`, "generate my direct reports report", "team pulse", "weekly team stats", or "show engineering activity for my directs".
-user-invokable: true
 ---
 
 # direct-reports-pulse

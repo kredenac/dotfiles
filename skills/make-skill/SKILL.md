@@ -1,7 +1,6 @@
 ---
 name: make-skill
 description: Scaffold a new skill for GitHub Copilot CLI (and optionally Claude Code). Creates the SKILL.md in the dotfiles skills directory so Copilot CLI auto-discovers it. Use when the user says "make a skill", "create a skill", "new skill", or "/make-skill".
-user-invokable: true
 ---
 
 # make-skill
@@ -23,7 +22,6 @@ Ask the user for:
 - **Description** — one-liner for the frontmatter `description` field. Make it trigger-rich:
   describe *when* the assistant should invoke it and include the literal `/skill-name` invocation
   and any natural-language phrases the user is likely to say.
-- **User-invokable** — should it be callable via `/skill-name`? (almost always yes)
 - **What it does** — brief explanation of the skill's purpose and the steps it should follow
 
 Use the AskUserQuestion tool if available; otherwise just ask in chat.
@@ -36,7 +34,6 @@ Create `C:\repos\dotfiles\skills\<name>\SKILL.md` with this structure:
 ---
 name: <name>
 description: <description>
-user-invokable: <true|false>
 ---
 
 # <name>
@@ -65,8 +62,8 @@ If the skill needs to run a script (PowerShell preferred on Windows), create it 
 ### 4. Activate in GHCP CLI
 
 The skill is auto-discovered from `skillDirectories`. To make it available in the **current**
-session, reload skills (the `extensions_reload` tool, `/skills`, or restart the CLI). New sessions
-pick it up automatically. Verify it loaded:
+session, run `/skills reload` or restart the CLI. New sessions pick it up automatically. Verify it
+loaded:
 
 - Run `/env` (or check the skills list) and confirm `<name>` appears, or
 - Confirm the file exists: `Test-Path "C:\repos\dotfiles\skills\<name>\SKILL.md"`
@@ -96,7 +93,8 @@ New-Item -ItemType SymbolicLink -Path "$dir\SKILL.md" -Target "C:\repos\dotfiles
 ### 6. Tell the user it's ready
 
 Confirm the skill file exists and (if reloaded) that GHCP lists it. Let them know they can invoke
-`/<name>` (or trigger it by the phrases in the description).
+it by mentioning `/<name>` in a prompt, such as `Use the /<name> skill`, or by using the trigger
+phrases in its description.
 
 ## Notes
 
@@ -104,8 +102,8 @@ Confirm the skill file exists and (if reloaded) that GHCP lists it. Let them kno
   via `skillDirectories` in `~/.copilot/settings.json`. No symlink needed for GHCP.
 - **Claude Code (optional):** skills are symlinked to `~/.claude/skills/<name>/SKILL.md` via
   `setup.ps1`. Only do Step 5 if the user wants Claude Code support too.
-- The frontmatter fields `name`, `description`, and `user-invokable` work in both GHCP CLI and
-  Claude Code.
+- Keep frontmatter to the documented Agent Skills fields. `name` and `description` are required;
+  add `license` or `allowed-tools` only when the skill needs them.
 - `setup.ps1` is idempotent — re-running it reports "already linked" for existing skills.
 - Companion scripts go in `C:\repos\dotfiles\scripts\` (symlinked to `~/.claude/scripts/` for
   Claude Code only).
