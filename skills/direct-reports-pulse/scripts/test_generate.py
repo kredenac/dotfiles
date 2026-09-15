@@ -55,6 +55,27 @@ class GenerateTests(unittest.TestCase):
         self.assertEqual(result["contributors"], 2)
         self.assertEqual(result["median"], 24.0)
 
+    def test_html_renders_person_details_inline(self):
+        now = datetime(2026, 9, 16, tzinfo=timezone.utc)
+        people = [MODULE.Person("a", "Person A", "Area")]
+        rows = [{
+            "author": "a",
+            "created": "2026-09-14T10:00:00Z",
+            "closed": "2026-09-15T10:00:00Z",
+            "status": "completed",
+            "isTrunk": True,
+            "isChore": False,
+            "mergeHours": 24.0,
+            "repository": "repo",
+            "url": "https://example.test/pr/1",
+            "title": "Example PR",
+        }]
+        html = MODULE.render_html("Manager", people, rows, MODULE.week_windows(now), now)
+        self.assertIn('class="detail-row"', html)
+        self.assertIn("detailHtml(x.person.alias,p)", html)
+        self.assertNotIn('id="details"', html)
+        self.assertNotIn('id="drillTitle"', html)
+
 
 if __name__ == "__main__":
     unittest.main()

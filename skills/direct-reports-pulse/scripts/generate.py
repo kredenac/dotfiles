@@ -119,7 +119,7 @@ latestRows
         timeout=120,
         server_timeout="00:02:00",
         raise_on_partial=True,
-        label="direct-reports-pulse-fast :: roster",
+        label="direct-reports-pulse :: roster",
     )
     manager_name = next(
         (str(row.get("ManagerName") or "") for row in rows if row.get("RecordType") == "manager"),
@@ -300,7 +300,7 @@ def query_prs(
                     timeout=180,
                     server_timeout="00:03:00",
                     raise_on_partial=True,
-                    label=f"direct-reports-pulse-fast :: {name}",
+                    label=f"direct-reports-pulse :: {name}",
                 )
             except partial_result_error:
                 if attempt == 2:
@@ -603,7 +603,10 @@ select{{padding:8px 10px;border:1px solid var(--line);border-radius:6px;backgrou
 .card{{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px}}
 .value{{font-size:24px;font-weight:650}} table{{width:100%;border-collapse:collapse;background:white}}
 th,td{{padding:9px 10px;border:1px solid var(--line);text-align:left;vertical-align:top}} th{{background:#eef1f5}}
-button.person{{border:0;background:none;color:var(--accent);cursor:pointer;padding:0;font:inherit}}
+button.person{{border:0;background:none;color:var(--accent);cursor:pointer;padding:0;font:inherit;text-align:left}}
+button.person::before{{content:"▸";display:inline-block;width:16px;color:var(--muted)}}
+button.person[aria-expanded="true"]::before{{content:"▾";color:var(--accent)}}
+tr.detail-row td{{padding:0;background:#f8fafc}} .detail-wrap{{padding:12px 16px 16px 26px}}
 .bars{{display:grid;gap:8px}} .bar{{display:grid;grid-template-columns:210px 1fr 52px;gap:8px;align-items:center}}
 .track{{height:12px;background:#e5e9ef;border-radius:8px;overflow:hidden}} .fill{{height:100%;background:#7b8797}}
 .bar.selected .fill{{background:var(--accent)}} a{{color:var(--accent)}} .hidden{{display:none}}
@@ -613,7 +616,6 @@ button.person{{border:0;background:none;color:var(--accent);cursor:pointer;paddi
 <section><h2>Team snapshot</h2><div id="snapshot" class="grid"></div></section>
 <section><h2>By direct report</h2><div id="people"></div></section>
 <section><h2>Weekly trends</h2><div id="trends" class="bars"></div></section>
-<section><h2 id="drillTitle">PR details</h2><div id="details"></div></section>
 <section><h2>Notable work</h2><div id="notable"></div></section>
 </main><script id="pulse-data" type="application/json">{json_for_script(payload)}</script>
 <script>
@@ -628,7 +630,7 @@ function metrics(rows,p){{const opened=rows.filter(r=>usable(r)&&inPeriod(r.crea
 const selector=document.getElementById("period");
 data.windows.forEach((p,i)=>selector.add(new Option(p.label+(p.current?" (WTD)":""),String(i))));
 selector.add(new Option("All five weeks","all")); selector.value=String(data.windows.length-1);
-let selectedPerson=data.people[0]?.alias||"";
+let selectedPerson="";
 function selectedPeriod(){{if(selector.value==="all")return{{start:data.windows[0].start,end:data.windows.at(-1).end,label:"All five weeks"}};return data.windows[Number(selector.value)]}}
 function render(){{
  const p=selectedPeriod(),m=metrics(data.rows,p);
@@ -638,13 +640,13 @@ function render(){{
  ["Active contributors",m.contributors],["Median merge hours",fmt(m.median)],["P80 merge hours",fmt(m.p80)+" (n="+m.n+")"]
  ].map(x=>`<div class="card"><div class="muted">${{x[0]}}</div><div class="value">${{x[1]}}</div></div>`).join("");
  const people=data.people.map(person=>{{const own=data.rows.filter(r=>r.author===person.alias);const pm=metrics(own,p);const active=own.filter(r=>usable(r)&&r.status==="active"&&inPeriod(r.created,p)).length;return{{person,pm,active}}}});
- document.getElementById("people").innerHTML=`<table><thead><tr><th>Person</th><th>Area</th><th>Opened</th><th>Merged</th><th>Active</th><th>Median hours</th></tr></thead><tbody>${{people.map(x=>`<tr><td><button class="person" data-alias="${{esc(x.person.alias)}}">${{esc(x.person.name)}}</button>${{x.person.note?`<div class="muted">${{esc(x.person.note)}}</div>`:""}}</td><td>${{esc(x.person.area)}}</td><td>${{x.pm.opened}}</td><td>${{x.pm.merged}}</td><td>${{x.active}}</td><td>${{fmt(x.pm.median)}} (n=${{x.pm.n}})</td></tr>`).join("")}}</tbody></table>`;
- document.querySelectorAll("button.person").forEach(b=>b.onclick=()=>{{selectedPerson=b.dataset.alias;renderDetails(p)}});
+ document.getElementById("people").innerHTML=`<table><thead><tr><th>Person</th><th>Area</th><th>Opened</th><th>Merged</th><th>Active</th><th>Median hours</th></tr></thead><tbody>${{people.map(x=>{{const expanded=selectedPerson===x.person.alias;return `<tr><td><button class="person" data-alias="${{esc(x.person.alias)}}" aria-expanded="${{expanded}}">${{esc(x.person.name)}}</button>${{x.person.note?`<div class="muted">${{esc(x.person.note)}}</div>`:""}}</td><td>${{esc(x.person.area)}}</td><td>${{x.pm.opened}}</td><td>${{x.pm.merged}}</td><td>${{x.active}}</td><td>${{fmt(x.pm.median)}} (n=${{x.pm.n}})</td></tr>${{expanded?`<tr class="detail-row"><td colspan="6"><div class="detail-wrap">${{detailHtml(x.person.alias,p)}}</div></td></tr>`:""}}`}}).join("")}}</tbody></table>`;
+ document.querySelectorAll("button.person").forEach(b=>b.onclick=()=>{{selectedPerson=selectedPerson===b.dataset.alias?"":b.dataset.alias;render()}});
  const weekly=data.windows.map(w=>({{w,m:metrics(data.rows,w)}}));const max=Math.max(1,...weekly.map(x=>Math.max(x.m.opened,x.m.merged)));
  document.getElementById("trends").innerHTML=weekly.map((x,i)=>`<div class="bar ${{selector.value===String(i)?"selected":""}}"><div>${{esc(x.w.label)}}${{x.w.current?" (WTD)":""}}</div><div><div class="track"><div class="fill" style="width:${{100*x.m.merged/max}}%"></div></div></div><div>${{x.m.merged}}</div></div>`).join("");
- renderDetails(p); renderNotable(p);
+ renderNotable(p);
 }}
-function renderDetails(p){{const person=data.people.find(x=>x.alias===selectedPerson);document.getElementById("drillTitle").textContent=(person?person.name:"Selected person")+" - PR details";const rows=data.rows.filter(r=>r.author===selectedPerson&&usable(r)&&(inPeriod(r.created,p)||inPeriod(r.closed,p)));document.getElementById("details").innerHTML=rows.length?`<table><thead><tr><th>Repository</th><th>PR</th><th>Status</th><th>Opened</th><th>Merged</th><th>Hours</th></tr></thead><tbody>${{rows.map(r=>`<tr><td>${{esc(r.repository)}}</td><td><a href="${{esc(r.url)}}" target="_blank" rel="noreferrer">${{esc(r.title)}}</a></td><td>${{esc(r.status)}}</td><td>${{esc((r.created||"").slice(0,10))}}</td><td>${{esc((r.closed||"").slice(0,10))}}</td><td>${{fmt(r.mergeHours)}}</td></tr>`).join("")}}</tbody></table>`:`<div class="card muted">No qualifying PRs in this period.</div>`}}
+function detailHtml(alias,p){{const rows=data.rows.filter(r=>r.author===alias&&usable(r)&&(inPeriod(r.created,p)||inPeriod(r.closed,p)));return rows.length?`<table><thead><tr><th>Repository</th><th>PR</th><th>Status</th><th>Opened</th><th>Merged</th><th>Hours</th></tr></thead><tbody>${{rows.map(r=>`<tr><td>${{esc(r.repository)}}</td><td><a href="${{esc(r.url)}}" target="_blank" rel="noreferrer">${{esc(r.title)}}</a></td><td>${{esc(r.status)}}</td><td>${{esc((r.created||"").slice(0,10))}}</td><td>${{esc((r.closed||"").slice(0,10))}}</td><td>${{fmt(r.mergeHours)}}</td></tr>`).join("")}}</tbody></table>`:`<div class="card muted">No qualifying PRs in this period.</div>`}}
 function renderNotable(p){{const merged=data.rows.filter(r=>usable(r)&&r.status==="completed"&&inPeriod(r.closed,p));const groups={{}};merged.forEach(r=>(groups[r.repository]??=[]).push(r));const entries=Object.entries(groups).sort((a,b)=>b[1].length-a[1].length).slice(0,7);document.getElementById("notable").innerHTML=entries.length?entries.map(([repo,rows])=>`<div class="card"><strong>${{esc(repo)}}</strong> - ${{rows.length}} merged PRs<br>${{rows.slice(0,3).map(r=>`<a href="${{esc(r.url)}}" target="_blank" rel="noreferrer">${{esc(r.title)}}</a>`).join("; ")}}</div>`).join(""):`<div class="card muted">No merged non-chore PRs in this period.</div>`}}
 selector.onchange=render;render();
 </script></body></html>"""
@@ -682,7 +684,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output-root",
         type=Path,
-        default=Path.home() / "AppData" / "Local" / "engpulse" / "direct-reports-pulse-fast",
+        default=Path.home() / "AppData" / "Local" / "engpulse" / "direct-reports-pulse",
     )
     parser.add_argument("--no-open", action="store_true")
     return parser.parse_args()
