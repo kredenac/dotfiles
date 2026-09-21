@@ -1,7 +1,6 @@
 ---
 name: octo-memory
 description: Sync and load Dimi's personal "Octo" memory from the nidimitr_microsoft/octo-memory repo, then use MEMORY.md as an index to navigate to the right context. Use when the user says "/octo-memory", "octo memory", "load my memory", "check octo memory", or asks a question that likely needs their persisted personal/work context (team, ADO area owners, azure admin recipes, daily logs, preferences, hard rules).
-user-invokable: true
 ---
 
 # octo-memory

@@ -1,7 +1,6 @@
 ---
 name: direct-reports-pulse
 description: Generate a fast, deterministic five-week direct-reports engineering pulse for any manager alias.
-user-invokable: true
 ---
 
 # direct-reports-pulse

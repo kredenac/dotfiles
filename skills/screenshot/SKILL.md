@@ -1,7 +1,6 @@
 ---
 name: screenshot
 description: Take a screenshot of the full screen and view it. Use when the user says "screenshot", "take a screenshot", "capture the screen", "show me what's on screen", or "/screenshot".
-user-invokable: true
 ---
 
 # screenshot

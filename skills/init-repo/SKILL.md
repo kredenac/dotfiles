@@ -1,7 +1,6 @@
 ---
 name: init-repo
 description: Initialize current directory as a git repo, set up project scaffolding, and push to GitHub as a private repo. Use when user says "init repo", "init-repo", or wants to set up a new project.
-user-invokable: true
 ---
 
 # init-repo

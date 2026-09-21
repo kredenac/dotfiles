@@ -1,7 +1,6 @@
 ---
 name: share-file-link
 description: Create or copy a file into the active OneDrive/SharePoint sync folder and return a browser link. Use for /share-file-link, "share this file", "give me a link to this file", "put this text in a file and share it", or "create a OneDrive link".
-user-invokable: true
 ---
 
 # share-file-link
