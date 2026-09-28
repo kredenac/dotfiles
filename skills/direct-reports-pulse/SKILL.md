@@ -33,7 +33,8 @@ Generate the direct-reports pulse without invoking the full EngPulse conductor o
 
 ## Scope
 
-- Current Monday-Sunday week-to-date plus four preceding complete weeks.
+- Tuesday-Sunday: current Monday-Sunday week-to-date plus four preceding complete weeks.
+- Monday: the preceding complete Monday-Sunday week (the latest seven-day period) plus four earlier complete weeks, avoiding an empty one-day comparison.
 - Azure DevOps and `GitHub.EMU` PR telemetry.
 - `GitHub.Proxima` and `msft.ghe.com` are intentionally excluded.
 - AAD is the roster source. The optional team file enriches names, areas, leave notes, and known identity aliases.

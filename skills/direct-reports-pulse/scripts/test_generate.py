@@ -22,6 +22,22 @@ class GenerateTests(unittest.TestCase):
         self.assertEqual(MODULE.nearest_rank([1, 2, 3, 4], 0.5), 2)
         self.assertEqual(MODULE.nearest_rank([1, 2, 3, 4, 5], 0.8), 4)
 
+    def test_week_windows_use_previous_complete_week_on_monday(self):
+        windows = MODULE.week_windows(datetime(2026, 9, 28, 12, tzinfo=timezone.utc))
+
+        self.assertEqual(windows[-1]["start"].isoformat(), "2026-09-21")
+        self.assertEqual(windows[-1]["end"].isoformat(), "2026-09-27")
+        self.assertFalse(windows[-1]["current"])
+        self.assertEqual(MODULE.latest_period_name(windows[-1]), "latest seven-day period")
+
+    def test_week_windows_use_current_week_to_date_after_monday(self):
+        windows = MODULE.week_windows(datetime(2026, 9, 29, 12, tzinfo=timezone.utc))
+
+        self.assertEqual(windows[-1]["start"].isoformat(), "2026-09-28")
+        self.assertEqual(windows[-1]["end"].isoformat(), "2026-10-04")
+        self.assertTrue(windows[-1]["current"])
+        self.assertEqual(MODULE.latest_period_name(windows[-1]), "current week-to-date")
+
     def test_period_metrics_assigns_opened_and_merged_by_own_timestamps(self):
         now = datetime(2026, 9, 16, tzinfo=timezone.utc)
         rows = [
@@ -75,6 +91,13 @@ class GenerateTests(unittest.TestCase):
         self.assertIn("detailHtml(x.person.alias,p)", html)
         self.assertNotIn('id="details"', html)
         self.assertNotIn('id="drillTitle"', html)
+
+    def test_monday_summary_describes_latest_seven_day_period(self):
+        now = datetime(2026, 9, 28, 12, tzinfo=timezone.utc)
+        text = MODULE.summary([], MODULE.week_windows(now), now, "Manager")
+
+        self.assertIn("in the latest seven-day period", text)
+        self.assertNotIn("current week-to-date", text)
 
 
 if __name__ == "__main__":

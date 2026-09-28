@@ -46,8 +46,9 @@ def kql_dynamic(values: list[str]) -> str:
 
 def week_windows(now: datetime, count: int = 5) -> list[dict[str, Any]]:
     local_now = now.astimezone()
-    current_start = local_now.date() - timedelta(days=local_now.weekday())
-    starts = [current_start - timedelta(weeks=offset) for offset in range(count - 1, -1, -1)]
+    this_week_start = local_now.date() - timedelta(days=local_now.weekday())
+    latest_start = this_week_start - timedelta(weeks=1) if local_now.weekday() == 0 else this_week_start
+    starts = [latest_start - timedelta(weeks=offset) for offset in range(count - 1, -1, -1)]
     windows = []
     for start in starts:
         end = start + timedelta(days=6)
@@ -55,9 +56,13 @@ def week_windows(now: datetime, count: int = 5) -> list[dict[str, Any]]:
             "start": start,
             "end": end,
             "label": f"{start.isoformat()} to {end.isoformat()}",
-            "current": start == current_start,
+            "current": start == this_week_start,
         })
     return windows
+
+
+def latest_period_name(window: dict[str, Any]) -> str:
+    return "current week-to-date" if window["current"] else "latest seven-day period"
 
 
 def utc_bounds(windows: list[dict[str, Any]], now: datetime) -> tuple[datetime, datetime]:
@@ -499,7 +504,7 @@ def render_markdown(
     title = f"{manager_name}'s Direct Reports Pulse"
     lines = [f"# {title}", ""]
     lines.append(
-        f"Window: **{windows[-1]['label']} (current week-to-date)** plus four preceding complete weeks. "
+        f"Window: **{windows[-1]['label']} ({latest_period_name(windows[-1])})** plus four preceding complete weeks. "
         f"Generated {now.astimezone().isoformat(timespec='seconds')}."
     )
     lines.extend(["", "## Team snapshot", ""])
@@ -667,7 +672,7 @@ def summary(rows: list[dict[str, Any]], windows: list[dict[str, Any]], now: date
     overall = period_metrics(rows, windows[0]["start"], windows[-1]["end"], now)
     return (
         f"{manager_name}'s team opened {current['opened']} and merged {current['merged']} qualifying PRs "
-        f"in the current week-to-date. Across all five weeks, it opened {overall['opened']} and merged "
+        f"in the {latest_period_name(windows[-1])}. Across all five weeks, it opened {overall['opened']} and merged "
         f"{overall['merged']}; median creation-to-merge was {fmt_num(overall['median'])} business hours."
     )
 
