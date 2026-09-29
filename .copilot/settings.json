@@ -23,7 +23,7 @@
     "C:\\repos\\dotfiles\\skills"
   ],
   "enabledMcpServers": [],
-  "model": "gpt-5.6-sol",
+  "model": "gpt-5.6-sol-fast",
   "effortLevel": "high",
   "contextTier": "long_context",
   "includeCoAuthoredBy": false
