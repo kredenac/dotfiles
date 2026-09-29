@@ -40,9 +40,12 @@ domain-lens      = false
 logger           = false
 computer-use = false
 
-[mcps.servers.bluebird]
+[profiles.word-copilot.mcps.builtins]
+ado = false
+
+[profiles.word-copilot.mcps.servers.gateway]
 command = "agency"
-args = ["mcp", "bluebird"]
+args = ["mcp", "gateway"]
 tools = ["*"]
 
 [plugins]
