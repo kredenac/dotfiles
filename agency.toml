@@ -13,7 +13,7 @@ branch = "main"
 # es-chat          = true
 
 # ── All built-in MCPs (disabled by default — set to true to enable) ──
-bluebird         = false
+bluebird         = true
 msft-learn       = false
 watson           = false
 s360-breeze      = false
