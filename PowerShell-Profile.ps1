@@ -34,13 +34,25 @@ New-Alias -Name gsq -Value GitSquashUnpushed
 
 $env:COPILOT_ALLOW_ALL = "true"
 $env:COPILOT_GITHUB_TABS = "false"
+$env:COPILOT_MODEL = "gpt-5.6-sol-fast"
 $env:KUSTO_KNOWN_SERVICES = '[{"service_uri":"https://kusto.aria.microsoft.com/","description":"Aria telemetry"},{"service_uri":"https://odxaugloop.eastus.kusto.windows.net/","description":"AugLoop"},{"service_uri":"https://1es.kusto.windows.net/","description":"1ES engineering"}]'
 
 function Invoke-Copilot {
+    $copilotDefaults = @()
+    if (-not ($args -match '^--model(?:=|$)')) {
+        $copilotDefaults += @("--model", "gpt-5.6-sol-fast")
+    }
+    if (-not ($args -match '^--reasoning-effort(?:=|$)')) {
+        $copilotDefaults += @("--reasoning-effort", "high")
+    }
+    if (-not ($args -match '^--context(?:=|$)')) {
+        $copilotDefaults += @("--context", "long_context")
+    }
+
     if (Get-Command agency -ErrorAction SilentlyContinue) {
-        agency copilot --yolo --profile word-copilot --remote @args
+        agency copilot --yolo --profile word-copilot --remote @copilotDefaults @args
     } else {
-        copilot --yolo @args
+        copilot --yolo @copilotDefaults @args
     }
 }
 Set-Alias -Name c -Value Invoke-Copilot
