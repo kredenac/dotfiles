@@ -23,7 +23,6 @@ UTC = timezone.utc
 class Person:
     alias: str
     name: str
-    area: str
     note: str = ""
 
 
@@ -100,7 +99,7 @@ let latestRows = materialize(
     AADUser
     | where isnotempty(MailNickname)
     | where MailNickname !contains "#ext#"
-    | summarize arg_max(EtlIngestDate, DisplayName, Mail, ReportsToEmailName, JobTitle, AccountEnabled)
+    | summarize arg_max(EtlIngestDate, DisplayName, Mail, ReportsToEmailName, AccountEnabled)
         by Alias = tolower(MailNickname)
 );
 let managerName = toscalar(latestRows | where Alias == managerAlias | project DisplayName | take 1);
@@ -108,11 +107,10 @@ latestRows
 | where tolower(ReportsToEmailName) == managerAlias
 | where AccountEnabled != false
 | project RecordType = "report", ManagerName = managerName, Alias,
-          DisplayName, Mail, JobTitle
+          DisplayName, Mail
 | union (
     print RecordType = "manager", ManagerName = managerName, Alias = managerAlias,
-          DisplayName = managerName, Mail = strcat(managerAlias, "@microsoft.com"),
-          JobTitle = "Management"
+          DisplayName = managerName, Mail = strcat(managerAlias, "@microsoft.com")
 )
 | order by RecordType asc, DisplayName asc
 """
@@ -134,7 +132,6 @@ latestRows
         Person(
             alias=str(row["Alias"]).lower(),
             name=str(row.get("DisplayName") or row["Alias"]),
-            area=str(row.get("JobTitle") or "Unknown"),
         )
         for row in rows
         if row.get("RecordType") == "report"
@@ -163,7 +160,8 @@ def parse_team_file(path: Path | None) -> dict[str, Person]:
         if not alias_match:
             continue
         alias = alias_match.group(1).lower()
-        people[alias] = Person(alias, cells[0], cells[2], cells[3])
+        note = cells[3] if cells[2].casefold() == "leave" else ""
+        people[alias] = Person(alias, cells[0], note)
     return people
 
 
@@ -483,11 +481,10 @@ def enrich_people(roster: list[Person], team: dict[str, Person], manager: str, m
     for person in roster:
         known = team.get(person.alias)
         if known:
-            note = known.note if known.area.casefold() == "leave" else ""
-            enriched.append(Person(known.alias, known.name, known.area, note))
+            enriched.append(known)
         else:
             enriched.append(person)
-    enriched.append(Person(manager, f"{manager_name} (manager)", "Management"))
+    enriched.append(Person(manager, f"{manager_name} (manager)"))
     return sorted(enriched, key=lambda person: (person.alias == manager, person.name.casefold()))
 
 
@@ -526,13 +523,13 @@ def render_markdown(
 
     overall_start, overall_end = windows[0]["start"], windows[-1]["end"]
     lines.extend(["", "## By direct report", ""])
-    lines.append("| Person | Area | Opened | Merged | Active PRs | Median creation-to-merge (hrs) | Top repositories |")
-    lines.append("|---|---|---:|---:|---:|---|---|")
+    lines.append("| Person | Opened | Merged | Active PRs | Median creation-to-merge (hrs) | Top repositories |")
+    lines.append("|---|---:|---:|---:|---|---|")
     for person in people:
         item = person_metrics(rows, person.alias, overall_start, overall_end, now)
         display = person.name + (f" ({person.note})" if person.note else "")
         lines.append(
-            f"| {display} | {person.area} | {item['opened']} | {item['merged']} | {item['active']} | "
+            f"| {display} | {item['opened']} | {item['merged']} | {item['active']} | "
             f"{fmt_num(item['median'])} (n={item['n']}) | {', '.join(item['repos']) or 'n/a'} |"
         )
 
@@ -645,7 +642,7 @@ function render(){{
  ["Active contributors",m.contributors],["Median merge hours",fmt(m.median)],["P80 merge hours",fmt(m.p80)+" (n="+m.n+")"]
  ].map(x=>`<div class="card"><div class="muted">${{x[0]}}</div><div class="value">${{x[1]}}</div></div>`).join("");
  const people=data.people.map(person=>{{const own=data.rows.filter(r=>r.author===person.alias);const pm=metrics(own,p);const active=own.filter(r=>usable(r)&&r.status==="active"&&inPeriod(r.created,p)).length;return{{person,pm,active}}}});
- document.getElementById("people").innerHTML=`<table><thead><tr><th>Person</th><th>Area</th><th>Opened</th><th>Merged</th><th>Active</th><th>Median hours</th></tr></thead><tbody>${{people.map(x=>{{const expanded=selectedPerson===x.person.alias;return `<tr><td><button class="person" data-alias="${{esc(x.person.alias)}}" aria-expanded="${{expanded}}">${{esc(x.person.name)}}</button>${{x.person.note?`<div class="muted">${{esc(x.person.note)}}</div>`:""}}</td><td>${{esc(x.person.area)}}</td><td>${{x.pm.opened}}</td><td>${{x.pm.merged}}</td><td>${{x.active}}</td><td>${{fmt(x.pm.median)}} (n=${{x.pm.n}})</td></tr>${{expanded?`<tr class="detail-row"><td colspan="6"><div class="detail-wrap">${{detailHtml(x.person.alias,p)}}</div></td></tr>`:""}}`}}).join("")}}</tbody></table>`;
+ document.getElementById("people").innerHTML=`<table><thead><tr><th>Person</th><th>Opened</th><th>Merged</th><th>Active</th><th>Median hours</th></tr></thead><tbody>${{people.map(x=>{{const expanded=selectedPerson===x.person.alias;return `<tr><td><button class="person" data-alias="${{esc(x.person.alias)}}" aria-expanded="${{expanded}}">${{esc(x.person.name)}}</button>${{x.person.note?`<div class="muted">${{esc(x.person.note)}}</div>`:""}}</td><td>${{x.pm.opened}}</td><td>${{x.pm.merged}}</td><td>${{x.active}}</td><td>${{fmt(x.pm.median)}} (n=${{x.pm.n}})</td></tr>${{expanded?`<tr class="detail-row"><td colspan="5"><div class="detail-wrap">${{detailHtml(x.person.alias,p)}}</div></td></tr>`:""}}`}}).join("")}}</tbody></table>`;
  document.querySelectorAll("button.person").forEach(b=>b.onclick=()=>{{selectedPerson=selectedPerson===b.dataset.alias?"":b.dataset.alias;render()}});
  const weekly=data.windows.map(w=>({{w,m:metrics(data.rows,w)}}));const max=Math.max(1,...weekly.map(x=>Math.max(x.m.opened,x.m.merged)));
  document.getElementById("trends").innerHTML=weekly.map((x,i)=>`<div class="bar ${{selector.value===String(i)?"selected":""}}"><div>${{esc(x.w.label)}}${{x.w.current?" (WTD)":""}}</div><div><div class="track"><div class="fill" style="width:${{100*x.m.merged/max}}%"></div></div></div><div>${{x.m.merged}}</div></div>`).join("");

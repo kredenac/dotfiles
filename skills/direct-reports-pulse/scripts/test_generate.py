@@ -73,7 +73,7 @@ class GenerateTests(unittest.TestCase):
 
     def test_html_renders_person_details_inline(self):
         now = datetime(2026, 9, 16, tzinfo=timezone.utc)
-        people = [MODULE.Person("a", "Person A", "Area")]
+        people = [MODULE.Person("a", "Person A")]
         rows = [{
             "author": "a",
             "created": "2026-09-14T10:00:00Z",
@@ -91,6 +91,23 @@ class GenerateTests(unittest.TestCase):
         self.assertIn("detailHtml(x.person.alias,p)", html)
         self.assertNotIn('id="details"', html)
         self.assertNotIn('id="drillTitle"', html)
+        self.assertNotIn("<th>Area</th>", html)
+        self.assertNotIn('"area":', html)
+
+    def test_markdown_omits_area_column(self):
+        now = datetime(2026, 9, 16, tzinfo=timezone.utc)
+        markdown = MODULE.render_markdown(
+            "Manager",
+            "manager",
+            [MODULE.Person("a", "Person A")],
+            [],
+            MODULE.week_windows(now),
+            now,
+            "commit",
+            1.0,
+        )
+
+        self.assertNotIn("| Area |", markdown)
 
     def test_monday_summary_describes_latest_seven_day_period(self):
         now = datetime(2026, 9, 28, 12, tzinfo=timezone.utc)
