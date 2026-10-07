@@ -50,6 +50,10 @@ tools = ["*"]
 
 [plugins]
 
+[[plugins.default]]
+plugin = "market:apiary@opg-microsoft/wordengai-agents"
+engines = ["copilot"]
+
 # [[plugins.default]]
 # plugin = "market:one-shot-telemetry-agent@opg-microsoft/wordengai-agents"
 # engines = ["copilot"]
