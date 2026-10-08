@@ -39,6 +39,14 @@ perf-pas         = false
 domain-lens      = false
 logger           = false
 computer-use = false
+ado = false
+code = false
+datapedia = false
+enghub = false
+icm = false
+kusto = false
+ocv = false
+word-oce-assistant = false
 
 [profiles.word-copilot.mcps.builtins]
 ado = false
