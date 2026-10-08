@@ -17,7 +17,7 @@
   "footer": {
     "showDirectory": true,
     "showBranch": true,
-    "showAiUsed": false
+    "showAiUsed": true
   },
   "skillDirectories": [
     "C:\\repos\\dotfiles\\skills"
