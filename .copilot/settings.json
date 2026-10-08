@@ -10,6 +10,17 @@
       }
     }
   },
+  "disabledMcpServers": [
+    "ado",
+    "code",
+    "datapedia",
+    "enghub",
+    "icm",
+    "kusto",
+    "ocv",
+    "teams",
+    "word-oce-assistant"
+  ],
   "disabledSkills": [],
   "showReasoning": false,
   "keepAlive": "busy",
