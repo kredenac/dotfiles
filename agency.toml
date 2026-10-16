@@ -62,10 +62,11 @@ command = "agency"
 args = ["mcp", "gateway"]
 tools = ["*"]
 
-[profiles.word-copilot.plugins]
-default = []
-
 [plugins]
+
+[[plugins.default]]
+plugin = "market:apiary@opg-microsoft/wordengai-agents"
+engines = ["copilot"]
 
 # [[plugins.default]]
 # plugin = "market:one-shot-telemetry-agent@opg-microsoft/wordengai-agents"

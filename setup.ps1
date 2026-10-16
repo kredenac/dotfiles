@@ -183,8 +183,12 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host "✓ Agency config validated" -ForegroundColor Green
 $agencyProfiles = agency config profiles --json | ConvertFrom-Json
-if (-not ($agencyProfiles | Where-Object name -eq "word-copilot")) {
+$wordCopilotProfile = $agencyProfiles | Where-Object name -eq "word-copilot"
+if (-not $wordCopilotProfile) {
     throw "Agency profile 'word-copilot' was not resolved"
+}
+if (-not ($wordCopilotProfile.plugins -contains "word-knowledgebase")) {
+    throw "Agency profile 'word-copilot' did not resolve the word-knowledgebase plugin"
 }
 Write-Host "✓ Word Copilot profile available" -ForegroundColor Green
 
