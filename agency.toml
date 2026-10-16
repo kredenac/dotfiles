@@ -1,8 +1,9 @@
-# Agency Config Docs: https://eng.ms/docs/coreai/devdiv/one-engineering-system-1es/1es-jacekcz/startrightgitops/agency/cli/agency-config
 
 [[remote_config]]
 git = "https://github.com/opg-microsoft/wordengai-agents"
 branch = "main"
+
+# Agency Config Docs: https://eng.ms/docs/coreai/devdiv/one-engineering-system-1es/1es-jacekcz/startrightgitops/agency/cli/agency-config
 
 [mcps.builtins]
 # ── Currently enabled ──
@@ -48,6 +49,11 @@ kusto = false
 ocv = false
 word-oce-assistant = false
 
+[mcps.servers.gateway]
+command = "agency"
+args = ["mcp", "gateway"]
+tools = ["*"]
+
 [profiles.word-copilot.mcps.builtins]
 ado = false
 
@@ -56,11 +62,10 @@ command = "agency"
 args = ["mcp", "gateway"]
 tools = ["*"]
 
-[plugins]
+[profiles.word-copilot.plugins]
+default = []
 
-[[plugins.default]]
-plugin = "market:apiary@opg-microsoft/wordengai-agents"
-engines = ["copilot"]
+[plugins]
 
 # [[plugins.default]]
 # plugin = "market:one-shot-telemetry-agent@opg-microsoft/wordengai-agents"
