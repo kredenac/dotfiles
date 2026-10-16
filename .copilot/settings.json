@@ -1,7 +1,7 @@
 {
-  "logLevel": "default",
-  "experimental": true,
-  "askUser": true,
+  "logLevel": "all",
+  "experimental": false,
+  "askUser": false,
   "extraKnownMarketplaces": {
     "agency": {
       "source": {

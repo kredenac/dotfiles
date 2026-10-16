@@ -37,7 +37,29 @@ $env:COPILOT_GITHUB_TABS = "false"
 $env:COPILOT_MODEL = "gpt-5.6-sol-fast"
 $env:KUSTO_KNOWN_SERVICES = '[{"service_uri":"https://kusto.aria.microsoft.com/","description":"Aria telemetry"},{"service_uri":"https://odxaugloop.eastus.kusto.windows.net/","description":"AugLoop"},{"service_uri":"https://1es.kusto.windows.net/","description":"1ES engineering"}]'
 
+function Repair-CopilotDotfileLinks {
+    $copilotDir = Join-Path $HOME ".copilot"
+    $dotfilesCopilotDir = "C:\repos\dotfiles\.copilot"
+
+    foreach ($name in @("settings.json", "copilot-instructions.md")) {
+        $path = Join-Path $copilotDir $name
+        $target = Join-Path $dotfilesCopilotDir $name
+        $item = Get-Item $path -Force -ErrorAction SilentlyContinue
+
+        if ($item -and $item.LinkType -eq "SymbolicLink" -and $item.Target -eq $target) {
+            continue
+        }
+
+        if (Test-Path $path) {
+            Remove-Item $path -Force
+        }
+        New-Item -ItemType SymbolicLink -Path $path -Target $target -Force | Out-Null
+    }
+}
+
 function Invoke-Copilot {
+    Repair-CopilotDotfileLinks
+
     $copilotDefaults = @()
     if (-not ($args -match '^--model(?:=|$)')) {
         $copilotDefaults += @("--model", "gpt-5.6-sol-fast")
