@@ -241,11 +241,13 @@ let users = materialize(
     | where AuthorAlias in (aliases)
     | project Hostname, UserId = tolong(UserId), Login, Email, Name, AuthorAlias
 );
+let userIds = users | project UserId;
 let prs = materialize(
     PullRequest
     | where CreatedAt between (startDate .. endDate)
         or ClosedAt between (startDate .. endDate)
     | where EtlProcessStartDate <= endDate
+    | where tolong(UserId) in (userIds)
     | extend Hostname = tolower(iff(isempty(Hostname), "github.com", Hostname))
     | join kind=inner users on Hostname, UserId
     | extend Payload = parse_json(Data)
