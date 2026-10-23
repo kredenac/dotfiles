@@ -72,7 +72,7 @@ function Invoke-Copilot {
     }
 
     if (Get-Command agency -ErrorAction SilentlyContinue) {
-        agency copilot --yolo --profile word-copilot --remote @copilotDefaults @args
+        agency copilot --yolo --profile word-copilot @copilotDefaults @args
     } else {
         copilot --yolo @copilotDefaults @args
     }
