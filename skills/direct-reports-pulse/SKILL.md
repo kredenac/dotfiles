@@ -37,5 +37,6 @@ Generate the direct-reports pulse without invoking the full EngPulse conductor o
 - Monday: the preceding complete Monday-Sunday week (the latest seven-day period) plus four earlier complete weeks, avoiding an empty one-day comparison.
 - Azure DevOps and `GitHub.EMU` PR telemetry.
 - `GitHub.Proxima` and `msft.ghe.com` are intentionally excluded.
+- Trunk classification reuses EngPulse's registry plus `EXTRA_TRUNK_BRANCHES` in `generate.py` for team integration branches, such as `opg-microsoft/octo-agent`'s `agents/word-copilot-oncall`. Add new long-lived team branches there.
 - AAD is the roster source. The optional team file enriches names, leave notes, and known identity aliases.
 - The script runs one AAD roster query followed by concurrent ADO and GitHub queries. Rendering is deterministic and does not call an LLM.

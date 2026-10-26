@@ -109,6 +109,16 @@ class GenerateTests(unittest.TestCase):
 
         self.assertNotIn("| Area |", markdown)
 
+    def test_extra_trunks_count_octo_oncall_branch_and_keep_registry(self):
+        registry = {("", "office", "office"): {"refs/heads/main"}}
+        merged = MODULE.with_extra_trunks(registry)
+
+        self.assertEqual(merged[("", "office", "office")], {"refs/heads/main"})
+        octo = merged[("github.com", "opg-microsoft", "octo-agent")]
+        self.assertIn("refs/heads/main", octo)
+        self.assertIn("refs/heads/agents/word-copilot-oncall", octo)
+        self.assertNotIn(("github.com", "opg-microsoft", "octo-agent"), registry)
+
     def test_monday_summary_describes_latest_seven_day_period(self):
         now = datetime(2026, 9, 28, 12, tzinfo=timezone.utc)
         text = MODULE.summary([], MODULE.week_windows(now), now, "Manager")

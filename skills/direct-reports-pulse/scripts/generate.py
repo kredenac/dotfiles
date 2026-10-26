@@ -18,6 +18,27 @@ from typing import Any
 CLUSTER = "https://1es.westus2.kusto.windows.net"
 UTC = timezone.utc
 
+# Pulse-only trunk additions merged over EngPulse's shared registry, keyed by
+# (host, organization, repo). Use for long-lived integration branches whose PRs
+# are real delivered work but don't target the repository's default branch.
+# An entry replaces the default-branch fallback, so list the default branch too.
+EXTRA_TRUNK_BRANCHES: dict[tuple[str, str, str], set[str]] = {
+    ("github.com", "opg-microsoft", "octo-agent"): {
+        "refs/heads/main",
+        "refs/heads/agents/word-copilot-oncall",
+    },
+}
+
+
+def with_extra_trunks(
+    trunk_map: dict[tuple[str, str, str], set[str]],
+    extras: dict[tuple[str, str, str], set[str]] = EXTRA_TRUNK_BRANCHES,
+) -> dict[tuple[str, str, str], set[str]]:
+    merged = {key: set(refs) for key, refs in trunk_map.items()}
+    for key, refs in extras.items():
+        merged.setdefault(tuple(part.lower() for part in key), set()).update(refs)
+    return merged
+
 
 @dataclass(frozen=True)
 class Person:
@@ -732,7 +753,7 @@ def main() -> int:
         chore_rule_kind,
         business_hours_between,
         is_trunk,
-        load_trunk_map(),
+        with_extra_trunks(load_trunk_map()),
     )
     window_name = f"{windows[-1]['start'].isoformat()}_{windows[-1]['end'].isoformat()}"
     output_dir = args.output_root / manager / window_name
