@@ -9,21 +9,21 @@ Capture a full-screen screenshot and view it.
 
 ## Steps
 
-1. Run the screenshot script using the Bash tool:
+1. Run the screenshot script:
 
-```bash
-powershell -ExecutionPolicy Bypass -File ~/.claude/scripts/screenshot.ps1
+```powershell
+powershell -ExecutionPolicy Bypass -File C:\repos\dotfiles\scripts\screenshot.ps1
 ```
 
 2. The script outputs the saved file path. Read the screenshot using the Read tool:
 
 ```
-~/.claude/screenshots/latest.png
+~/.copilot/screenshots/latest.png
 ```
 
 3. Describe what you see to the user, or answer any questions they have about the screen content.
 
 ## Notes
 
-- The screenshot always overwrites `~/.claude/screenshots/latest.png` — only one file is ever kept.
+- The screenshot always overwrites `~/.copilot/screenshots/latest.png` — only one file is ever kept.
 - If the script fails, check that PowerShell is available and System.Windows.Forms is accessible.

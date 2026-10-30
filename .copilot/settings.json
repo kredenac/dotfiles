@@ -31,7 +31,8 @@
     "showAiUsed": true
   },
   "skillDirectories": [
-    "C:\\repos\\dotfiles\\skills"
+    "C:\\repos\\dotfiles\\skills",
+    "C:\\repos\\wow\\skills"
   ],
   "enabledMcpServers": [],
   "model": "gpt-5.6-sol-fast",

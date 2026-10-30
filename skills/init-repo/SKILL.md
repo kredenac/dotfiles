@@ -9,7 +9,7 @@ Initialize the current working directory as a git repo with appropriate config, 
 
 ## Steps
 
-1. **Check current state** — Check if already a git repo, if CLAUDE.md exists, if package.json exists, etc. Detect what kind of project this is (TypeScript, Python, etc.) or ask the user if unclear.
+1. **Check current state** — Check if already a git repo, if AGENTS.md exists, if package.json exists, etc. Detect what kind of project this is (TypeScript, Python, etc.) or ask the user if unclear.
 
 2. **Ask clarifying questions** — Use AskUserQuestion for anything ambiguous:
    - Project type if not obvious (TypeScript, Python, etc.)
@@ -26,10 +26,10 @@ Initialize the current working directory as a git repo with appropriate config, 
    - Add `tsx` as a dev dependency if not present
    - Run `npm install` if dependencies were added
 
-6. **CLAUDE.md** — Handle the project CLAUDE.md:
-   - **If it already exists**: Read it. Ensure it contains an instruction telling Claude to keep CLAUDE.md up to date after any meaningful changes. If that instruction is missing, append it.
-   - **If it doesn't exist**: Create a minimal CLAUDE.md with a project header, brief description placeholder, and the instruction: "Always keep this CLAUDE.md up to date after any meaningful changes to the project structure, conventions, or tech stack."
-   - **Testing section**: If tests don't already exist in the project (no `tests/` directory, no test files), include this section in CLAUDE.md:
+6. **AGENTS.md** — Handle the project AGENTS.md:
+   - **If it already exists**: Read it. Ensure it tells coding agents to keep AGENTS.md current after meaningful changes. If that instruction is missing, append it.
+   - **If it doesn't exist**: Create a minimal AGENTS.md with a project header, brief description placeholder, and the instruction: "Always keep this AGENTS.md up to date after meaningful changes to the project structure, conventions, or tech stack."
+   - **Testing section**: If tests don't already exist in the project (no `tests/` directory, no test files), include this section in AGENTS.md:
      ```
      ## Testing (delete this section after tests are implemented)
      When adding tests to this project, follow these conventions:
@@ -56,4 +56,4 @@ Initialize the current working directory as a git repo with appropriate config, 
 - Always create the repo as **private**.
 - If anything is unclear (project type, name, etc.), ask — don't guess.
 - Don't overwrite existing files — merge or append as appropriate.
-- The CLAUDE.md self-update instruction is the key requirement: every project CLAUDE.md must tell Claude to keep it current.
+- The AGENTS.md self-update instruction is the key requirement: every project AGENTS.md must tell coding agents to keep it current.

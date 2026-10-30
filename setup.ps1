@@ -42,14 +42,6 @@ if (Test-Path (Split-Path -Parent $wtSettingsPath)) {
     Write-Host "⚠ Windows Terminal not found, skipping" -ForegroundColor Yellow
 }
 
-# Claude Code global config
-$claudeDir = "$env:USERPROFILE\.claude"
-if (-not (Test-Path $claudeDir)) {
-    New-Item -ItemType Directory -Path $claudeDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$claudeDir\claude.md" -Target "$PSScriptRoot\.claude\claude.md"
-Set-DotfileLink -Path "$claudeDir\settings.json" -Target "$PSScriptRoot\.claude\settings.json"
-
 # GitHub Copilot CLI global config
 $copilotDir = "$env:USERPROFILE\.copilot"
 if (-not (Test-Path $copilotDir)) {
@@ -63,59 +55,6 @@ if ($env:COMPUTERNAME -eq "DIMI-PC") {
     Set-DotfileLink -Path "$copilotDir\mcp-config.json" -Target "$PSScriptRoot\.copilot\mcp-config.json"
 }
 Set-DotfileLink -Path "$copilotDir\permissions-config.json" -Target "$PSScriptRoot\.copilot\permissions-config.json"
-
-# Claude Code scripts
-$scriptsDir = "$env:USERPROFILE\.claude\scripts"
-if (-not (Test-Path $scriptsDir)) {
-    New-Item -ItemType Directory -Path $scriptsDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$scriptsDir\screenshot.ps1" -Target "$PSScriptRoot\scripts\screenshot.ps1"
-
-# Claude Code skills
-$skillsDir = "$env:USERPROFILE\.claude\skills"
-if (-not (Test-Path $skillsDir)) {
-    New-Item -ItemType Directory -Path $skillsDir -Force | Out-Null
-}
-$skillScreenshotDir = "$skillsDir\screenshot"
-if (-not (Test-Path $skillScreenshotDir)) {
-    New-Item -ItemType Directory -Path $skillScreenshotDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$skillScreenshotDir\SKILL.md" -Target "$PSScriptRoot\skills\screenshot\SKILL.md"
-$skillMakeSkillDir = "$skillsDir\make-skill"
-if (-not (Test-Path $skillMakeSkillDir)) {
-    New-Item -ItemType Directory -Path $skillMakeSkillDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$skillMakeSkillDir\SKILL.md" -Target "$PSScriptRoot\skills\make-skill\SKILL.md"
-
-$skillInitRepoDir = "$skillsDir\init-repo"
-if (-not (Test-Path $skillInitRepoDir)) {
-    New-Item -ItemType Directory -Path $skillInitRepoDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$skillInitRepoDir\SKILL.md" -Target "$PSScriptRoot\skills\init-repo\SKILL.md"
-
-$skillDotfilesDir = "$skillsDir\dotfiles"
-if (-not (Test-Path $skillDotfilesDir)) {
-    New-Item -ItemType Directory -Path $skillDotfilesDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$skillDotfilesDir\SKILL.md" -Target "$PSScriptRoot\skills\dotfiles\SKILL.md"
-
-$skillWordCopilotOncallDir = "$skillsDir\word-copilot-oncall"
-if (-not (Test-Path $skillWordCopilotOncallDir)) {
-    New-Item -ItemType Directory -Path $skillWordCopilotOncallDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$skillWordCopilotOncallDir\SKILL.md" -Target "$PSScriptRoot\skills\word-copilot-oncall\SKILL.md"
-
-$skillOfficeSerbiaSubDir = "$skillsDir\office-serbia-azure-sub"
-if (-not (Test-Path $skillOfficeSerbiaSubDir)) {
-    New-Item -ItemType Directory -Path $skillOfficeSerbiaSubDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$skillOfficeSerbiaSubDir\SKILL.md" -Target "$PSScriptRoot\skills\office-serbia-azure-sub\SKILL.md"
-
-$skillOctoMemoryDir = "$skillsDir\octo-memory"
-if (-not (Test-Path $skillOctoMemoryDir)) {
-    New-Item -ItemType Directory -Path $skillOctoMemoryDir -Force | Out-Null
-}
-Set-DotfileLink -Path "$skillOctoMemoryDir\SKILL.md" -Target "$PSScriptRoot\skills\octo-memory\SKILL.md"
 
 if (-not $SkipAutoHotkey) {
     # AutoHotkey: install if missing, link script to Startup, and run it

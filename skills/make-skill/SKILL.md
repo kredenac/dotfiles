@@ -1,6 +1,6 @@
 ---
 name: make-skill
-description: Scaffold a new skill for GitHub Copilot CLI (and optionally Claude Code). Creates the SKILL.md in the dotfiles skills directory so Copilot CLI auto-discovers it. Use when the user says "make a skill", "create a skill", "new skill", or "/make-skill".
+description: Scaffold a new skill for GitHub Copilot CLI. Creates the SKILL.md in the dotfiles skills directory so Copilot CLI auto-discovers it. Use when the user says "make a skill", "create a skill", "new skill", or "/make-skill".
 ---
 
 # make-skill
@@ -10,7 +10,7 @@ Create a new skill for GitHub Copilot CLI (GHCP), fully wired up and immediately
 GHCP CLI discovers skills directly from the directories listed under `skillDirectories` in
 `~/.copilot/settings.json` — currently `C:\repos\dotfiles\skills`. That means a skill becomes
 available simply by creating `C:\repos\dotfiles\skills\<name>\SKILL.md`. No symlink is required
-for GHCP. (Claude Code support is an optional secondary step — see the Notes.)
+for GHCP.
 
 ## Steps
 
@@ -68,29 +68,7 @@ loaded:
 - Run `/env` (or check the skills list) and confirm `<name>` appears, or
 - Confirm the file exists: `Test-Path "C:\repos\dotfiles\skills\<name>\SKILL.md"`
 
-### 5. (Optional) Also register for Claude Code
-
-If the user also wants the skill in Claude Code, add a symlink block to `setup.ps1` under the
-"Claude Code skills" section (before `# Git defaults`), following the existing pattern:
-
-```powershell
-$skill<PascalName>Dir = "$skillsDir\<name>"
-if (-not (Test-Path $skill<PascalName>Dir)) {
-    New-Item -ItemType Directory -Path $skill<PascalName>Dir -Force | Out-Null
-}
-Set-DotfileLink -Path "$skill<PascalName>Dir\SKILL.md" -Target "$PSScriptRoot\skills\<name>\SKILL.md"
-```
-
-(`<PascalName>` is the skill name in PascalCase, e.g. `review-pr` -> `ReviewPr`.) Then create the
-symlink now:
-
-```powershell
-$dir = "$env:USERPROFILE\.claude\skills\<name>"
-if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
-New-Item -ItemType SymbolicLink -Path "$dir\SKILL.md" -Target "C:\repos\dotfiles\skills\<name>\SKILL.md" -Force | Out-Null
-```
-
-### 6. Tell the user it's ready
+### 5. Tell the user it's ready
 
 Confirm the skill file exists and (if reloaded) that GHCP lists it. Let them know they can invoke
 it by mentioning `/<name>` in a prompt, such as `Use the /<name> skill`, or by using the trigger
@@ -100,10 +78,6 @@ phrases in its description.
 
 - **GHCP primary:** skills live in `C:\repos\dotfiles\skills\<name>\SKILL.md` and are discovered
   via `skillDirectories` in `~/.copilot/settings.json`. No symlink needed for GHCP.
-- **Claude Code (optional):** skills are symlinked to `~/.claude/skills/<name>/SKILL.md` via
-  `setup.ps1`. Only do Step 5 if the user wants Claude Code support too.
 - Keep frontmatter to the documented Agent Skills fields. `name` and `description` are required;
   add `license` or `allowed-tools` only when the skill needs them.
-- `setup.ps1` is idempotent — re-running it reports "already linked" for existing skills.
-- Companion scripts go in `C:\repos\dotfiles\scripts\` (symlinked to `~/.claude/scripts/` for
-  Claude Code only).
+- Companion scripts go in `C:\repos\dotfiles\scripts\`.

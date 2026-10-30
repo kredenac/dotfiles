@@ -9,7 +9,6 @@ I'm testing these to be copied by the script which setups the fresh OS.
 |------|-----------|--------------|
 | PowerShell | `$PROFILE` | Git aliases, posh-git, `COPILOT_ALLOW_ALL=true` |
 | Windows Terminal | LocalState | Themes, profiles |
-| Claude Code | `~/.claude/` | `settings.json`, `claude.md`, hooks, skills |
 | **GitHub Copilot CLI** | `~/.copilot/` | `settings.json`, `mcp-config.json`, `permissions-config.json` |
 | **Agency** | `%LOCALAPPDATA%\agency\agency.toml` | Remote Word profiles and default Copilot plugins |
 
