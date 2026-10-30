@@ -51,3 +51,11 @@ To add MCP servers, edit `.copilot/mcp-config.json`:
 
 On `DIMI-PC`, `setup.ps1` preserves the machine-local `~/.copilot/mcp-config.json`
 instead of replacing it with a symlink.
+
+### Repair Global Secure Access
+
+Run `Repair-Gsa` or `gsa-fix` when Global Secure Access is disconnected after Azure VPN has
+already been closed. The command verifies Microsoft authentication routing, clears an orphaned
+`MSFT-AzVPN-Manual` tunnel only when it is blocking those endpoints, and restarts the GSA
+services and tray client. Use `Repair-Gsa -DiagnoseOnly` to inspect the route without changing
+anything.
