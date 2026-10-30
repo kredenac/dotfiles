@@ -57,13 +57,6 @@ function Repair-CopilotDotfileLinks {
     }
 }
 
-function Repair-Gsa {
-    param([switch]$DiagnoseOnly)
-
-    & "C:\repos\dotfiles\scripts\Repair-Gsa.ps1" @PSBoundParameters
-}
-Set-Alias -Name gsa-fix -Value Repair-Gsa
-
 function Invoke-Copilot {
     Repair-CopilotDotfileLinks
 
