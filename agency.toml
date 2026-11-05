@@ -49,11 +49,6 @@ kusto = false
 ocv = false
 word-oce-assistant = false
 
-[mcps.servers.gateway]
-command = "agency"
-args = ["mcp", "gateway"]
-tools = ["*"]
-
 [profiles.word-copilot.mcps.builtins]
 ado = false
 
