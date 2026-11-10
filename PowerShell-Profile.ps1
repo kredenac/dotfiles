@@ -34,7 +34,7 @@ New-Alias -Name gsq -Value GitSquashUnpushed
 
 $env:COPILOT_ALLOW_ALL = "true"
 $env:COPILOT_GITHUB_TABS = "false"
-$env:COPILOT_MODEL = "gpt-5.6-sol-fast"
+$env:COPILOT_MODEL = "claude-opus-5.5"
 $env:KUSTO_KNOWN_SERVICES = '[{"service_uri":"https://kusto.aria.microsoft.com/","description":"Aria telemetry"},{"service_uri":"https://odxaugloop.eastus.kusto.windows.net/","description":"AugLoop"},{"service_uri":"https://1es.kusto.windows.net/","description":"1ES engineering"}]'
 
 function Repair-CopilotDotfileLinks {
@@ -62,7 +62,7 @@ function Invoke-Copilot {
 
     $copilotDefaults = @()
     if (-not ($args -match '^--model(?:=|$)')) {
-        $copilotDefaults += @("--model", "gpt-5.6-sol-fast")
+        $copilotDefaults += @("--model", "claude-opus-5.5")
     }
     if (-not ($args -match '^--reasoning-effort(?:=|$)')) {
         $copilotDefaults += @("--reasoning-effort", "high")
